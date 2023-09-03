@@ -1,0 +1,65 @@
+	Pruebas del programa, imagenes subidas al drive:
+https://drive.google.com/drive/folders/1mnSypxLY0G9jEGhgAlK3b3jqytwbvfsM?usp=sharing
+
+
+En el siguiente sistema operativo el archivo llamado archLinux.dat debería mostrarse correctamente, fue creado desde ahí.
+Las pruebas las hicimos sobre el archivo de la cátedra ahí también.
+archLinux.dat contiene cargado todo el mes de Enero, algunos de Octubre y uno del 31/12, son 40 en total. 
+Están iguales que los que están en el archivo de prueba de la cátedra (menos el de 31/12).
+1.	Sistema operativo (Linux)
+Ubuntu 18.04.6 LTS
+
+-Versión-
+  Núcleo		: Linux 5.4.0-131-generic (i686)
+  Versión		: #147~18.04.1-Ubuntu SMP Sat Oct 15 13:09:51 UTC 2022
+  Biblioteca C		: Libreria C GNU / (Ubuntu GLIBC 2.27-3ubuntu1.6) 2.27
+  Distribución		: Ubuntu 18.04.6 LTS
+-Sesión actual-
+  Nombre del equipo		: joaquin-POSITIVO-BGH
+  Nombre de usuario		: joaquin (joaquin)
+  Idioma		: es_AR.UTF-8 (es_AR:es)
+  Directorio personal		: /home/joaquin
+-Otras-
+  Activo		: 15 minutos
+  Promedio de carga		: 0,40, 0,97, 1,23
+  Entropía disponible en /dev/random		: 256 bits (promedio)
+
+	CPU
+Intel(R) Atom(TM) CPU N2600 @ 1.60GHz
+1 physical processor; 2 cores; 4 threads
+
+	Información de "gcc -v"
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/i686-linux-gnu/7/lto-wrapper
+Target: i686-linux-gnu
+Configured with: ../src/configure -v --with-pkgversion='Ubuntu 7.5.0-3ubuntu1~18.04' --with-bugurl=file:///usr/share/doc/gcc-7/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++ --prefix=/usr --with-gcc-major-version-only --program-suffix=-7 --program-prefix=i686-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib --enable-objc-gc=auto --enable-targets=all --enable-multiarch --disable-werror --with-arch-32=i686 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-checking=release --build=i686-linux-gnu --host=i686-linux-gnu --target=i686-linux-gnu
+Thread model: posix
+gcc version 7.5.0 (Ubuntu 7.5.0-3ubuntu1~18.04)
+
+
+En el siguiente sistema operativo el archivo llamado archWindows.dat debería mostrarse correctamente, fue creado desde ahí.
+archWindows.dat contiene 33 registos en total. De los meses 1 al 12 tiene los días 1 y 2 cargados. Los meses 1 al 9 tienen, además, el día 3 cargado.
+Ej: mes: 9 y dia: 3 = temp max 38, temp min 2, % hum 2, pres atm 920, dir viento 20, veloc viento 20, precip 20...
+2.	Sistema operativo (Windows)
+Windows 10 Home 64 bits
+
+	CPU
+AMD A10-9700 RADEON R7, 10 COMPUTE CORES 4C+6G 3.50GHz
+
+	Información de "gcc -v"
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/9/lto-wrapper
+OFFLOAD_TARGET_NAMES=nvptx-none:hsa
+OFFLOAD_TARGET_DEFAULT=1
+Target: x86_64-linux-gnu
+Configured with: ../src/configure -v --with-pkgversion='Ubuntu 9.4.0-1ubuntu1~20.04.1' --with-bugurl=file:///usr/share/doc/gcc-9/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++,gm2 --prefix=/usr --with-gcc-major-version-only --program-suffix=-9 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib=auto --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none=/build/gcc-9-Av3uEd/gcc-9-9.4.0/debian/tmp-nvptx/usr,hsa --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+Thread model: posix
+gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.1)
+
+	compilado usando
+gcc -Wall TPFinal_AyP2022_CGM_JPT.c -o TPFinal_AyP2022_CGM_JPT
+
+	ejecutado usando 
+./TPFinal_AyP2022_CGM_JPT

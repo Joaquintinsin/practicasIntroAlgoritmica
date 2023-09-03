@@ -1,0 +1,23 @@
+Algoritmo Selección
+Lexico
+	N=4
+	s e arreglo [1...n] de Telemento
+	i, j e (1...n+1)
+	min e (1...N) {índice del menor}
+	Acción Intercambiar(dato-resultado x,y e Telemento)
+	{Pre-cond: x=x 0 ^ y=y 0 } {Pos-cond: x=y 0 ^ y=x 0 }
+Inicio
+	i <-- 1
+	Mientras ( i <= N ) hacer
+		j <-- i
+		min <-- i
+		Mientras ( j <= N ) hacer
+			Si( s[j] < s[min] ) entonces
+				min <-- j
+			Fsi
+			j <-- j+1
+		Fmientras
+		Intercambiar (s[i], s[min])
+		i <-- i+1
+	Fmientras
+Fin

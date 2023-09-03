@@ -1,0 +1,240 @@
+
+Proyecto Final
+Sea enunciado el siguiente problema:
+
+Una estación meteorológica registra a diario una serie de datos como la temperatura
+máxima, la mínima, la humedad media, la presión atmosférica, la dirección
+predominante del viento y su velocidad, también la precipitación acumulada. Estos
+valores se obtienen a diario. La estación analiza la información para obtener series de
+datos que le permitan alimentar modelos de predicción del tiempo.
+
+
+Nos solicitan que desarrollemos un programa para poder almacenar los registros diarios y procesar los valores almacenados para la elaboración de los pronósticos del tiempo.
+
+Para el tratamiento de los datos el programa a desarrollar debe poder crear y mantener un archivo con los registros diarios. Los datos de un mismo año están en un único archivo.
+
+El programa a desarrollar deberá presentarle al usuario un menú de opciones con las siguientes directivas:
+Dar de alta un registro diario
+Suprimir un registro diario
+Modificar un registro, buscando por la fecha
+Mostrar todos los registros activos
+Buscar registro de un día específico, mostrando todos los parámetros
+Listar el o los días de máxima temperatura en lo que va del año
+Listar el o los días de máxima precipitación en lo que va del año
+Listar las fechas de mayor a menor velocidad del viento
+Realizar una copia de seguridad del archivo del año en curso
+Salir
+
+En dónde:
+· Las opciones de alta, suprimir, modificar y mostrar se ejecutarán directamente sobre el archivo. La opción suprimir consiste en aplicar borrado lógico.
+· Para la búsqueda de datos de un día dado, se pasarán los registros diarios del archivo a un arreglo y la búsqueda se realizará sobre el arreglo. Para buscar se debe implementar una función que devuelva el índice del arreglo dónde se encuentra el registro buscado y sino está que devuelva -1. Esta función debe ser recursiva.
+· Para listar el día o días con máxima temperatura, se creará una lista (Lista Simplemente Encadenada) de registros con la misma máxima temperatura (en caso que haya más de un día con la misma máxima temperatura) y se mostrará las fechas de los días en que ocurrieron esas máximas temperaturas.
+
+
+· Para listar el día o días con máxima precipitación, se ordenará el arreglo por precipitaciones de menor a mayor (usar un método estable) y se informarán las fechas y las precipitaciones correspondientes de los diez primeros días de mayores precipitaciones ordenados de mayor a menor.
+· Para listar las fechas de mayor a menor velocidad de viento, se pasarán los registros diarios del archivo a un arreglo y se ordenará por velocidades del viento mayor a menor (usar un método estable distinto al anterior) y se informarán las fechas y el viento correspondiente de los diez primeros días de mayores velocidades ordenados de mayor a menor.
+
+Para el manejo de arreglos y de listas deberá implementar las acciones y funciones desarrolladas a lo largo del año (función Vacia(), función Llena(), acción Insertar(), acción Ordenar(), acción Mostrar(), etcétera).
+
+La opción de copia de seguridad consiste en crear un archivo nuevo (con otro
+nombre) con sólo los registros no borrados del archivo original.
+
+A cumplir:
+· Para cada opción del menú de debe diseñar un módulo adecuado.
+
+· Todas las opciones del menú deben efectuarse sobre registros activos, los borrados no deben ser utilizados.
+
+· El programa comenzará solicitando el nombre del archivo con el cuál va a trabajar, si el
+archivo no existe lo creará.
+
+
+Se hace entrega bajo las siguientes condiciones:
+
+● El proyecto final debe resolverse en grupos de 2 alumnos. Se aceptarán grupos de 3 alumnos en caso que sea debidamente justificado. La fecha límite de conformación de grupos es el 07 de Noviembre.
+
+● Los días 07, 09 y 14 de Noviembre se dispondrán para consultas generales sobre el
+proyecto final, en los horarios habituales de clases prácticas. En las clases del 07 y el 09
+los grupos deberán mostrar los Diseños (algoritmos) que dan solución al problema
+planteado.
+
+● Consultas en Laboratorio: 09 Noviembre de 11 a 13 y 16 a 18hs en el Laboratorio 101 del Pab 2 (UNRC). Por EVELIA se informarán otros días de consulta posibles.
+
+● IMPORTANTE: Quienes no formen parte de algún grupo a la fecha límite serán considerados en condición de libre.
+
+● El tiempo estimado de realización del Trabajo Práctico Integrador es de aproximadamente 20 hs en total.
+
+
+
+● El proyecto final debe incluir:
+	○ 1) Un documento en formato PDF con el Diseño (algoritmo).
+	○ 2) Un archivo de texto con la Implementación (programa fuente en C).
+
+● El proyecto final se entregará mediante la Sección de Actividades del aula virtual.
+	○ Se fija el lunes 14 de Noviembre como fecha límite para la entrega del algoritmo (Diseño) con la resolución del proyecto. El algoritmo debe respetar las convenciones y estar debidamente comentado.
+	○ Se fija el miércoles 16 de noviembre como fecha límite para la entrega del código fuente (segunda parte) con la resolución del proyecto. El código fuente debe respetar las convenciones y estar debidamente comentado.
+	○ El responsable del grupo será el encargado de adjuntar el algoritmo (Diseño) y el código fuente (implementación) en el aula virtual.
+
+● El proyecto es obligatorio y debe aprobarse (igual que un parcial). No tiene recuperatorio.
+
+● El grupo realizará defensa del proyecto en caso que la cátedra lo considere necesario (en fecha a definir en cada caso).
+
+
+A continuación presentamos el Algoritmo en pseudocódigo:
+
+	Acción Alta(dato nomArch e Cadena, resultado fA e Archivo de regdiario)
+	Léxico local
+		rA e regdiario
+		rta e Lógico
+		msg e Cadena
+		Acción PedirFecha(resultado fecha e Z)
+		Léxico local
+			msg e Cadena
+			dA, mA, aA e Z
+		Inicio	// De la acción PedirFecha
+			Entrada: aA
+			// Def de años
+			Si ( aA < 1000 o aA > 9999 ) entonces
+				Repetir
+					msg <-- "Ingresar un año válido"
+					Salida: msg
+					Entrada: aA
+				Hasta que ( aA >= 1000 y aA <= 9999 )
+			Fsi
+			Si ( ( aA mod 4 = 0 y aA mod 100 <> 0 ) o ( aA mod 100 = 0 y aA mod 400 = 0 ) )  entonces // Es bisiesto
+				Entrada: mA
+				// Def de mes
+				Si ( mA < 1 o mA > 12 ) entonces
+					Repetir
+						msg <-- "Ingresar un mes válido"
+						Salida: msg
+						Entrada: mA
+					Hasta que ( mA >= 1 y mA <= 12 )
+				Fsi
+				Entrada: dA
+				// Def de días
+				Si ( dA < 1 o dA > 31 ) entonces
+					Repetir
+						msg <-- "Ingresar un día válido"
+						Salida: msg
+						Entrada: dA
+					Hasta que ( dA >= 1 y dA <= 31 )
+				Fsi
+				Si ( mA = 2 y dA > 29 ) entonces
+					Repetir
+						msg <-- "Ingresar un día de febrero válido"
+						Salida: msg
+						Entrada: dA
+					Hasta que ( dA >= 1 y dA <= 29 )
+				Fsi
+			sino	// no es bisiesto
+				Entrada: mA
+				// Def de mes
+				Si ( mA < 1 o mA > 12 ) entonces
+					Repetir
+						msg <-- "Ingresar un mes válido"
+						Salida: msg
+						Entrada: mA
+					Hasta que ( mA >= 1 y mA <= 12 )
+				Fsi
+				Entrada: dA
+				// Def de días
+				Si ( dA < 1 o dA > 31 ) entonces
+					Repetir
+						msg <-- "Ingresar un día válido"
+						Salida: msg
+						Entrada: dA
+					Hasta que ( dA >= 1 y dA <= 31 )
+				Fsi
+				Si ( mA = 2 y dA > 28 ) entonces
+					Repetir
+						msg <-- "Ingresar un día de febrero válido. Atención: El año ingresado no es bisiesto"
+						Salida: msg
+						Entrada: dA
+					Hasta que ( dA >= 1 y dA <= 28 )
+				Fsi
+			Fsi
+			fecha <-- dA * 1000000 + mA * 10000 + aA
+		Facción
+		Acción PedirTemp(resultado tM e Z)
+		Léxico local
+			msg e Cadena
+		Inicio
+			Entrada: tM
+			Si ( tM < -100 o tM > 100 ) entonces
+				Repetir
+					msg <-- "Ingresar una temperatura válida. Entre -100 y 100 grados centígrados."
+					Salida: msg
+					Entrada: tM
+				Hasta que ( tM >= -100 y tm <= 100 )
+			Fsi
+		Facción
+		Acción PedirPresAtm(resultado prA e Z)
+		Léxico local
+			msg e Cadena
+		Inicio
+			Entrada: prA
+			Si ( prA < 900 o prA > 3500 ) entonces
+				Repetir
+					msg <-- "Ingresar una presión atmosférica válida. Entre 900 y 3500."
+					Salida: msg
+					Entrada: prA
+				Hasta que ( prA >= 900 y prA <= 3500 )
+			Fsi
+		Facción
+		Acción PedirVelocViento(resultado wA e Z)
+		Léxico local
+			msg e Cadena
+		Inicio
+			Entrada: wA
+			Si ( wA <= 0 ) entonces
+				Repetir
+					msg <-- "Ingresar una velocidad de viento válida. Debe ser positivo."
+					Salida: msg
+					Entrada: wA
+				Hasta que ( wA > 0 )
+			Fsi
+		Facción
+	Inicio	// De la acción Alta
+		Abrir(nomArch, fA, a)
+		msg <-- "¿Desea dar de alta un registro?"
+		Salida: msg
+		Entrada: rta
+		Si ( rta ) entonces
+			Repetir
+				msg <-- "Ingresar la fecha correspondiente al registro"
+				Salida: msg
+				PedirFecha(rA.ddmmyyyy)
+				msg <-- "Ingresar la temperatura máxima de la fecha"
+				Salida: msg
+				PedirTemp(rA.tmax)
+				msg <-- "Ingresar la temperatura mínima de la fecha"
+				Salida: msg
+				PedirTemp(rA.tmin)
+				msg <-- "Ingresar el porcentaje de humedad promedio de la fecha"
+				Salida: msg
+				Entrada: rA.HUM
+				msg <-- "Ingresar el promedio de la presión atmosférica de la fecha"
+				Salida: msg
+				PedirPresAtm(rA.PNM)	// entre 900 y 3500
+				msg <-- "Ingresar la dirección del viento de la fecha"
+				Salida: msg
+				Entrada: rA.DV
+				msg <-- "Ingresar la velocidad máxima del viento de la fecha"
+				Salida: msg
+				PedirVelocViento(rA.FF)	// positivo
+				msg <-- "Ingresar la precipitación pluvial acumulado el día de la fecha"
+				Salida: msg
+				Entrada: rA.PP
+				rA.borrado <-- Falso
+				Escribir(fA, rA)
+				msg <-- "¿Desea seguir cargando? V o F"
+				Salida: msg
+				Entrada: rta
+			Hasta que ( no(rta) )
+		sino
+			msg <-- "Vuelve al menú principal"
+			Salida: msg
+		Fsi
+		Cerrar(fA)
+	Facción
+

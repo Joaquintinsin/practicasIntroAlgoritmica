@@ -1,0 +1,43 @@
+Algoritmo Inserción
+Lexico
+	N=4
+	s e arreglo [1...N] de Telemento
+	aux e Telemento
+	i, j e (1...N+1)
+Inicio	// Arreglo ya cargado
+	i <-- 2
+	Mientras ( i <= N ) hacer
+		aux <-- s[i]
+		j <-- i-1
+		Mientras ( j > 0 y s[j] > aux ) hacer
+			s[j+1] <-- s[j]
+			j <-- j-1
+		Fmientras
+		s[j+1] <-- aux
+		i <-- i+1
+	Fmientras
+Fin
+
+
+
+Algoritmo Ins2
+Léxico
+	N = 4
+	s, new e arreglo [1..N] de TElemento
+	Acción CargarArreglo(resultado x e areglo [1..N] de TElemento
+	aux e TElemento
+	i, j e (1..N+1)
+Inicio	// Arreglo ya cargado
+	CargarArreglo(s)
+	Si ( s.cant > 0 ) entonces
+		new[1] <-- s[1]
+		Para ( i <-- 2 , i <= N , i <-- i + 1 ) hacer
+			Para ( j <-- 1 , j <= i , j <-- j + 1 ) hacer
+				Si ( s[i] < new[j] ) entonces
+					new[j+1] <-- new [j]
+					new[j] <-- s[i]
+				Fsi
+			Fpara
+		Fpara
+	Fsi
+Fin

@@ -1,0 +1,43 @@
+Algoritmo Fibonacci
+Lexico
+	n e Z
+	i e Z
+	ac1, ac2 e Z
+Inicio
+	Entrada: n
+	ac1 <- 0
+	ac2 <- 1
+	Segun
+		(n = 0): Salida: "Nada"
+		(n = 1): Salida: ac1
+		(n = 2): Salida: ac1 ac2
+		(n = 3): Salida: ac1 ac2 ac2
+		(n>2 y n<>3): Salida: ac1 ac2
+	Fsegun
+
+	Para (i<--n, i>2, i<--i-1) hacer
+		Si (i mod 2 = 0) entonces
+			ac1<--ac1+ac2
+			Salida: ac1
+		sino
+			ac2<--ac1+ac2
+			Salida: ac2
+		fsi
+	Fpara
+Fin
+
+
+
+Algoritmo FibonacciWikipedia
+Léxico
+	a, b, k , n e Z
+Inicio
+	Entrada: n
+	a<--0
+	b<--1
+	Para (k<--0, k <=n, k<--k+1) Hacer
+		b<--b+a
+		a<--b-a
+		Salida: b
+	Fpara
+Fin

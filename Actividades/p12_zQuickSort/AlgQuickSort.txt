@@ -1,0 +1,44 @@
+Algoritmo QuickSort
+Léxico
+	N=20
+	Tarreglo = arreglo [1...N] de Telemento
+	s e Tarreglo
+	x, y e Z
+	Acción QuickSort(dato-resultado a e Tarreglo, inf, sup e Z)
+	Léxico local
+		x, tam e Telemento
+		i, j e Z
+	Inicio //acción
+		i <-- inf
+		j <-- sup
+		x <-- a[(inf+sup)div 2] //elije el pivot
+		Mientras ( i <= j ) hacer
+			// ordena solo el pivot respecto al resto
+			// arma parejas y las intercambia
+			Mientras ( a[i] < x ) hacer
+				i <-- i+1 //busca uno <= que el pivot
+			Fmientras
+			Mientras ( a[j] > x ) hacer
+				j <-- j-1 //busca uno >= que el pivot
+			Fmientras
+			Si ( i <= j ) entonces
+				tam <-- a[i] //intercambia
+				a[i] <-- a[j]// uno de la
+				a[j] <-- tam // izq con
+				i <-- i+1 // uno de la
+				j <-- j-1 //der
+			Fsi
+		Fmientras //deja el pivot
+		// ordenado
+		Si ( inf < j ) entonces // izq
+			Quicksort(a,inf,j)
+		Fsi
+		Si ( sup > i ) entonces // der
+			Quicksort(a,i,sup)
+		Fsi
+	Facción //acción
+Inicio //algoritmo
+	x <--1
+	y <--N
+	Quicksort(s,x,y)
+Fin //algoritmo 

@@ -1,0 +1,57 @@
+Ejercicio 13 de la práctica 9. Joaquín Tissera.
+
+Algoritmo ManipularTripletes
+Léxico
+	TNodo = < info e Cadena, next, back e puntero a TNodo >
+
+	Accion Cargar(resultado q, u e puntero a TNodo)	// Lo carga el enunciado, solo lo pongo para simularlo cargado
+
+	Accion InsertarSegunda(dato q e puntero a TNodo, elem e Cadena, resultado a e puntero a TNodo)
+	Inicio
+		Obtener(a)
+		(^a).info <- elem
+		(^a).next <- (^q).next
+		(^a).back <- q
+		(^q).next <- a
+		(^(^a).next).back <- a
+	Facción
+
+	Acción ModificarTercer(dato q e puntero a TNodo, elem e Cadena, resultado a e puntero a TNodo)
+	Inicio
+		a <- (^(^(^q).next).next).next
+		(^a).info <- elem
+	Facción
+
+	Acción EliminarUlitimo(dato/resultado u e puntero a TNodo)
+	Léxico local
+		s e puntero a TNodo
+	Inicio
+		s <- u
+		u <- (^u).back
+		(^u).next <- nil
+		Liberar(s)
+	Facción
+
+	Acción MostrarLista(dato q e puntero a TNodo)
+	Inicio
+		Mientras ( q <> nil ) hacer
+			Salida: (^q).info
+			q <- (^q).next
+		Fmientras
+	Facción
+
+	r, t, s, p e puntero a TNodo
+	msg, elIns e Cadena
+Inicio
+	Cargar(r,p)	// Sea la acción que cargue lo que el enunciado da hecho
+	msg <- "Ingresar la cadena a insertar en la 2da pos"
+	Salida: msg
+	elIns <- "Tito"	// Entrada: elIns
+	InsertarSegunda(r, elIns, t)
+	msg <- "Ingresar la cadena para modificar el tercer nodo"
+	Salida: msg
+	elIns <- "estás?"	// Entrada: elIns
+	ModificarTercer(r, elIns, s)
+	EliminarUltimo(p)
+	MostrarLista(r)
+Fin
