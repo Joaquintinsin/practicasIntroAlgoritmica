@@ -1,0 +1,420 @@
+// pasado a carpeta
+
+Lunes 29/09
+
+// pasado a carpeta
+	Act 1
+Ej. 1.a) Defina la función recursiva potencia de un número natural y exponente natural que está en la teoría.
+1.b) Defina la función recursiva fibonacci que está en la teoría.
+1.c) Defina una función recursiva que reciba como parámetro un número natural y devuelva la sumatoria
+de los números desde el uno hasta el número dado incluido. Haga una prueba (como en la diapositiva 21),
+invocando a la función recursiva con parámetro actual de valor 4.
+1.d) Defina una función recursiva que reciba como parámetro un número natural y devuelva la
+productoria de los números pares desde el uno hasta el número dado incluido.
+
+a) Función Potencia (dato a e N, e e N ) --> N
+Inicio
+	Según
+		( e = 0 ) : <-- 1
+		( e = 1 ) : <-- a
+		Otros : <-- a * Potencia(a, (e-1) )
+	Fsegún
+Ffunción
+
+b) Función Fibonacci (dato n e N) --> N
+Inicio
+	Según
+		( n = 0 ) : <-- 0
+		( n = 1 ) : <-- 1
+		Otros : <-- Fibonacci(n-1) + Fibonacci(n-2)
+	Fsegún
+Ffunción
+
+c) Función Sumatoria (dato n e N) --> N
+Inicio
+	Si ( n = 0 ) entonces
+		<-- n
+	sino
+		n + Sumatoria(n-1)
+	Fsi
+Ffunción
+
+d) Función Productoria (dato n e N) --> N
+Inicio
+	Si ( n = 0 ) entonces
+		<-- 1
+	sino
+		Si ( n mod 2 = 0 ) entonces
+			<-- n * Productoria(n-2)
+		sino
+			<-- n-1
+		Fsi
+	Fsi
+Ffunción
+
+// pasado a carpeta
+	Act 2
+Ej. 2.a) Defina una acción recursiva que reciba como parámetro un arreglo de hasta 30 números enteros, y
+la cantidad de valores cargados; y retorne en una variable, a llamar suma, la sumatoria de todos los
+números contenidos en el arreglo.
+2.b) Defina una acción recursiva que reciba como parámetro un arreglo de hasta 30 números enteros y la
+cantidad de valores cargados; y retorne en una variable a llamar producto, el producto de todos números
+contenidos en el arreglo, entre la posición 1 y n, siendo n un parámetro que se pasa y que puede tomar el
+valor 1 hasta 30 como máximo.
+
+a) NMax = 30
+TArreglo = arreglo [1..NMax] de Z
+TData = < a e TArreglo, cant e (0..NMax) >
+Acción SumatoriaArreglo (dato q e TData, dato/resultado suma e Z)
+Inicio
+	Si ( q.cant = 0 ) entonces
+		nada
+	sino
+		suma <-- suma + q.a[q.cant]
+		q.cant <-- q.cant - 1
+		SumatoriaArreglo(q, suma)
+	Fsi
+Facción
+
+b) Acción ProductoArreglo (dato q e TData, n e (1..NMax), dato/resultado producto e Z)
+{Pre: producto = 1, q.cant > 0 }
+Inicio
+	Si ( (n = 1) o (q.cant = 1) ) entonces
+		producto <-- q.a[n]
+	sino
+		producto <-- q.a[n] * producto
+		q.cant <-- q.cant - 1
+		ProductoArreglo(q, n-1, producto)
+	Fsi
+Facción
+
+// pasado a carpeta
+	Act 3
+Ej. 3) Defina una acción recursiva que reciba como parámetro un arreglo de 30 números enteros y la
+cantidad de valores cargados; y retorne en una variable a llamar pares el valor Verdadero si todos los
+números contenidos en el arreglo son pares sino que retorne Falso.
+
+// explicar a celi
+Acción ParImparRecursivo(dato arr e TData, dato/resultado pares e Logico)
+{Pre: pares = Verdadero, arr.cant <> 0 }
+Inicio
+	Si ( arr.cant = 0 ) entonces
+		nada
+	sino
+		pares <-- ( arr.a[arr.cant] mod 2 = 0 ) y pares		// si ya pares dio falso siempre se le va a poner falso. lo arrastra hasta el final
+		arr.cant <-- arr.cant - 1							// muevo
+		ParImparRecursivo(arr,pares)					// recurso
+	Fsi
+Faccion
+
+Acción Pares(dato q e TData, dato i e Z, dato/resultado todosPares e Logico)
+{Pre: i = 1 y q.cant > 0 }
+Inicio
+	Si ( i = q.cant ) entonces
+		todosPares <-- todosPares y (q.a[i] mod 2 = 0)
+	sino
+		todosPares <-- todosPares y (q.a[i] mod 2 = 0)
+		i <-- i + 1
+		Pares(q, i, todosPares)
+	Fsi
+Facción
+
+Acción Pares(dato q e TData, dato/resultado todosPares e Lógico)
+Inicio
+	Según
+		(q.cant = 0) : nada
+		(q.cant >= 1 y (q.a[q.cant] mod 2 <> 0) ):	todosPares <-- Falso
+		(q.cant >= 1 y (q.a[q.cant] mod 2 = 0) ) : 	todosPares <-- Verdadero
+													q.cant <-- q.cant -1
+													Pares(q,todosPares)
+	Fsegún
+Facción
+
+// pasado a carpeta
+	Act 4
+Ej. 4) Defina una acción recursiva que reciba como parámetro un arreglo de 30 caracteres y la cantidad de
+valores cargados; y retorne en una variable a llamar contA la cantidad de letras “a” que hay en el arreglo.
+
+Acción CantidadDeA(dato q e TData, dato/resultado contA e Z)
+{Pre: contA = 0}
+Inicio
+	Si ( q.cant = 0 ) entonces
+		nada
+	sino
+		Si ( q.a[q.cant] = 'a' ) entonces
+			contA <-- contA + 1
+		Fsi
+		q.cant <-- q.cant - 1
+		CantidadDeA(q,contA)
+	Fsi
+Facción
+
+// pasado a carpeta
+	Act 5
+Ej. 5) Dada una lista simplemente encadenada del siguiente tipo TElemento = <nro ∈ Z, sig ∈ puntero a TElemento>
+escribir las siguientes funciones o acciones recursivas:
+
+5.a) LongElem, función que dado un puntero al primer elemento de la lista retorne la cantidad de
+elementos, es decir la longitud de la misma.
+// En cola
+Función LongElem(dato q e puntero a TElemento, dato cant e Z) --> Z
+{Pre: cant = 0, LSE sin ficticio}
+Inicio
+	Si ( q <> nil ) entonces
+		cant <-- cant + 1
+		q <-- (^q).sig
+		<-- LongElem(q, cant)
+	sino
+		<-- cant
+	Fsi
+Ffunción
+
+// En aumento
+Función LongElem(dato q e puntero a TElemento) --> Z
+Inicio
+	Si ( q = nil ) entonces
+		<-- 0
+	sino
+		<-- 1 + LongElem( (^q).sig )
+	Fsi
+Ffunción
+
+5.b) Suma, función que dado un puntero al primer elemento de la lista retorne la suma de los elementos
+de la misma.
+// En cola
+Función Suma(dato q e puntero a TElemento, dato sum e Z) --> Z
+{Pre: sum = 0}
+Inicio
+	Si ( q = nil ) entonces
+		<-- sum
+	sino
+		sum <-- sum + (^q).nro
+		q <-- (^q).sig
+		<-- Suma(q, sum)
+	Fsi
+Ffunción
+
+// En aumento
+Función Suma(dato q e puntero a TElemento) --> Z
+Inicio
+	Si ( q = nil ) entonces
+		<-- 0
+	sino
+		<-- (^q).nro + Suma( (^q).sig )
+	Fsi
+Ffunción
+
+// pasado a carpeta
+	Act 6
+Ej. 6.a) Defina una función recursiva que reciba como parámetro una LSE de números enteros y retorne
+como resultado la cantidad de números pares que contiene.
+// En cola
+Funcion CantPares(dato q e puntero a TNodo, dato cant e Z) --> Z
+{Pre: cant = 0 y LSE s/fict}
+Inicio
+	Si ( q = nil ) entonces
+		<-- cant
+	sino
+		Si ( (^q).info mod 2 = 0 ) entonces
+			cant <-- cant + 1
+		Fsi
+		<-- CantPares( (^q).next, cant)
+	Fsi
+Ffunción
+
+// En aumento
+Funcion CantPares(dato q e puntero a TNodo) --> Z
+{Pre: LSE s/fict}
+Inicio
+	Si ( q = nil ) entonces
+		<-- 0
+	sino
+		Si ( (^q).info mod 2 = 0 ) entonces
+			<-- 1 + CantPares( (^q).next )
+		sino
+			<-- CantPares( (^q).next )
+		Fsi
+	Fsi
+Ffunción
+
+6.b) Idem pero con una acción recursiva (agregando un parámetro para el resultado).
+Acción CantPares(dato q e puntero a TNodo, dato/resultado cant e Z)
+{Pre: cant = 0}
+Inicio
+	Si ( q = nil ) entonces
+		nada
+	sino
+		Si ( (^q).info mod 2 = 0 ) entonces
+			cant <-- cant + 1
+			CantPares( (^q).next , cant)
+		Fsi
+	Fsi
+Facción
+
+// pasado a carpeta
+	Act 7
+Ej. 7) Defina una acción recursiva que reciba como parámetro un número natural n, si n es par la acción debe dar por salida todos los números
+pares comprendidos entre n y 0, y si n es impar debe dar por salida todos los números impares entre n y 0.
+
+Acción ParesImpares(dato n e N, dato/resultado cantPares, cantImpares e Z)
+{Pre: cantPares = 0 y cantImpares = 0}
+Inicio
+	Si ( n = 0 ) entonces
+		Salida: n
+	sino
+		Si ( n mod 2 = 0 ) entonces
+			Salida: n
+			Salida: cantPares
+			ParesImpares(n-2, cantPares+1, cantImpares)
+		sino
+			Salida: n
+			Salida: cantImpares
+			ParesImpares(n-1, cantPares, cantImpares+1)
+		Fsi
+	Fsi
+Facción
+
+Acción ParesImpares(dato n e N)
+Inicio
+	Si ( n <= 1 ) entonces
+		Salida: n
+	sino
+		Si ( n mod 2 = 0 ) entonces
+			Salida: n
+			ParesImpares(n-2)
+		sino
+			Salida: n
+			ParesImpares(n-2)
+		Fsi
+	Fsi
+Facción
+
+Lunes 03/10
+
+// pasado a carpeta
+	Act 8
+Ej. 8) Defina una función que dado un puntero al primer elemento de una LSE de números enteros retorne
+el mayor valor de la lista.
+
+Función MayorValor(dato q e puntero a TNodo, aux e Z) --> Z
+{Pre: q <> nil y LSE s/fict y aux = 0}
+Inicio
+	Si ( q = nil ) entonces
+		<-- aux
+	sino
+		Si ( aux < (^q).info ) entonces
+			aux <-- (^q).info
+		Fsi
+		<-- MayorValor( (^q).next, aux )
+	Fsi
+Ffunción
+
+Función Mayor(dato q e puntero a TLista) --> Z
+Inicio
+	Si ( q <> nil ) entonces
+		Si ( (^q).info >= Mayor( (^q).next ) entonces
+			<-- (^q).info
+		Fsi
+		<-- Mayor( (^q).next )
+	sino
+		<-- (^q)info
+	Fsi
+Ffunción
+
+Función May(dato q e puntero a TLista, may e Z) --> Z
+{Pre: q <> nil y may = (^q).info }
+Inicio
+	Si ( q = nil ) entonces
+		<-- may
+	sino
+		Si ( may < (^q).info ) entonces
+			may <-- (^q).info
+		Fsi
+		<-- May( (^q).next, may)
+	Fsi
+Ffunción
+
+// pasado a carpeta
+	Act 9
+Ej. 9) Dada las siguientes funciones, resueltas como recursión en aumento, hallar para cada caso una
+solución de recursión de cola.
+9.a) Función factorial (dato n ∈ N) → N
+{Def: (n0=0 ∧ fact(n0)=1) ∨ (n0>0 ∧ fact(n0)=1*2*..*n0)}
+Inicio
+	según
+		n=0: ← 1
+		n>0: ← n * factorial(n-1)
+	fsegún
+Ffunción
+
+Acción Factorial(dato n e N, dato/resultado cant e N)
+{Pre: cant = 1 }
+Inicio
+	Según
+		( n = 0 ) : cant <-- 1
+		( n > 0 ) : cant <-- n * cant
+				   Factorial(n-1, cant)
+	Fsegún
+Facción
+
+
+9.b) TElem = <info ∈ m, next ∈ puntero a TElem>
+TLista = puntero a TElem
+
+Función long (dato l ∈ TLista) → N
+Inicio
+	según
+		l=nil: ← 0
+		l≠nil: ← 1 + long((^l).next)
+	fsegún
+Ffunción
+
+Acción Long (dato l e TLista, dato/resultado cant e N)
+{Pre: cant = 0 }
+Inicio
+	Según
+		( l = nil ) : cant <-- 0
+		( l <> nil ) : cant <-- 1 + cant
+				       Long( (^l).next , cant)
+	Fsegún
+Ffunción
+
+
+9.c) Función contOcu (dato a ∈ arreglo [1..254] de Carácter, u ∈ (0..254), c ∈ carácter) → (0..254)
+{Def: 	((contOcu(a,u,c,res)=0 ∧ el arreglo a esta vacío o no existe ningún carácter igual a c) ∨ 
+		(contOcu(a,u,c,res)<>0 ∧ existe uno o más caracteres en a que son iguales a c)) ∧ c=Co }
+Inicio
+	según
+		u=0: ← 0
+		a [u]=c : ← 1+ contOcu(a, u-1,c)
+		a [u]<>c : ← contOcu(a, u-1,c)
+	fsegún
+Ffunción
+
+Acción ContOcu (dato a e arreglo [1..254] de Caracter, u e (0..254), c e Caracter, dato/resultado res e (0..254) )
+{Pre: res = 0}
+Inicio
+	Si ( u = 0 ) entonces
+		nada
+	sino
+		Si ( a.[u] = c ) entonces
+			res <-- res + 1
+		Fsi
+		u <-- u - 1
+		ContOcu(a, u, c, res)
+	Fsi
+Facción
+
+// hecho en la carpeta
+10) Analice si las soluciones obtenidas en el ejercicio 5.a), 5.b) y 5. c) son de recursión en aumento o
+de recursión en cola.
+
+// hecho en la carpeta
+11) Resuelva el ejercicio 1.a) y 1.b) de esta práctica pero dando una solución con recursión en cola.
+
+// hecho en la carpeta
+Preguntas Teóricas:
+I) PREGUNTA: ¿Qué es el caso base y que es el caso inductivo? ¿hay diferencias entre ambos?
+II) PREGUNTA: ¿Cómo nos damos cuenta que estamos usando recursión de cola?
+III) PREGUNTA: ¿Cómo nos damos cuenta que estamos usando recursión en aumento?
+IV) PREGUNTA: ¿Qué diferencia hay en el uso de la memoria entre recursión de cola y en aumento?

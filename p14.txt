@@ -1,0 +1,700 @@
+Tema: Tratamiento de secuencias con marca inicial. Uso de Esquemas.
+Duración: 2 clases
+Esta práctica tiene como objetivos
+	-Introducir la utilización de esquemas algorítmicos para el tratamiento de datos que se presentan en forma de secuencias con marca inicial.
+	-Emplear abstracciones que nos permitan tratar mediante esquemas secuencias con marca inicial.
+
+Implementación del modelo de secuencia con marca inicial empleando Archivos
+
+Ej. 1) Dados un caracter c y una secuencia de caracteres almacenada en un archivo denominado secu.txt,desarrollar un algoritmo 
+	que almacene en una variable igu la cantidad de caracteres de la secuencia que son iguales a c y en una variable dist la cantidad de 
+	caracteres de la secuencia que son distintos a c.
+Nota: realice una acción que permita cargar caracteres en el archivo secu.txt.
+
+Algoritmo IgualesYDistintos
+Léxico
+	Acción CargarArchivo (resultado fA e Archivo de Texto)
+	Léxico local
+		cA e Caracter
+	Inicio
+		Abrir ("secu.txt", fA, a)
+		Repetir
+			Entrada: cA
+			Si ( cA <> '+' ) entonces
+				Escribir(fA, cA)
+			Fsi
+		Hasta que ( cA = '+' )
+		Cerrar(fA)
+	Facción
+	Acción CantIguales(dato cA e Caracter, resultado iguales e Z)
+	Léxico local
+		fA e Archivo de Texto
+		copy e Caracter
+	Inicio
+		Abrir ("secu.txt", fA, l)
+		Si ( EOF(fA) ) entonces
+			Salida: "El archivo está vacío"
+		sino
+			iguales <-- 0
+			Mientras ( no(EOF(fA)) ) hacer
+				Leer(fA, copy)
+				Si ( copy = cA ) entonces
+					iguales <-- iguales + 1
+				Fsi
+			Fmientras
+		Fsi
+		Cerrar(fA)
+	Facción
+	Acción CantDistintos(dato cA e Caracter, resultado distintos e Z)
+	Léxico local
+		fA e Archivo de Texto
+		copy e Caracter
+	Inicio
+		Abrir ("secu.txt", fA, l)
+		Si ( EOF(fA) ) entonces
+			Salida: "El archivo está vacío"
+		sino
+			distintos <-- 0
+			Mientras ( no(EOF(fA)) ) hacer
+				Leer(fA, copy)
+				Si ( copy <> cA ) entonces
+					distintos <-- distintos + 1
+				Fsi
+			Fmientras
+		Fsi
+		Cerrar(fA)
+	Facción
+	igu, dist e Z
+	f e Archivo de Texto
+	c e Caracter
+Inicio
+	CargarArchivo(f)
+	Entrada: c
+	CantIguales(c, igu)
+	CantDistintos(c, dist)
+Fin
+
+Ej. 2) Dado un archivo (llamado personal.dat) que almacena la información de los empleados de una fábrica mediante registro de tipo 
+	Tpers=<ape∈ cadena, nom∈ cadena, antigüedad ∈ Ν, sueldo ∈ R, ventas ∈ R>, dónde ape es el apellido, nom el nombre, antigüedad 
+	es la cantidad de años de antigüedad en el trabajo, el sueldo a percibir en el mes y ventas las ventas realizadas en el mes, desarrolle un
+	algoritmo que permita calcular el sueldo mediante la ecuación: sueldo= 80000+ ventas*0,05 + 80000* antigüedad /100. 
+	El archivo tiene cargado todos los campos excepto el sueldo.
+
+Algoritmo CalcSueldo
+Léxico
+	N = 80000
+	TPers = < ape e Cadena, nom e Cadena, antiguedad e N, sueldo e R, ventas e R >
+	f e Archivo de TPers
+	emp e TPers
+	sueldoEcuacion e R
+	Acción CargarArchivo(resultado fA e Archivo de TPers)
+Inicio
+	CargarArchivo(f)
+	Abrir ("personal.dat", f, a)	// Inic adquisición
+	IrPos(f, 0)
+	Si ( FEOF(f) ) entonces
+		Salida: "El archivo está vacío"	// Trat por sec vacía
+	sino
+		Mientras ( no(EOF(f) ) hacer		// Repetir
+			Leer(f, emp)
+			sueldoEcuacion <-- N + emp.ventas * 0,05 + N * emp.antiguedad / 100
+			emp.sueldo <-- sueldoEcuacion
+			IrPos(f, PosiciónActual(f)-1)
+			Escribir(f, emp)
+		Fmientras							// Hasta que ( EOF(f) )
+	Fsi
+	Cerrar(f)
+Fin
+
+Ej. 3) Desarrolle una acción que utilice como parámetro de entrada el nombre interno del archivo, el nombre de un estudiante a buscar y 
+	cómo parámetro de salida una variable entera que almacenará el valor que corresponda a la posición del registro con ese nombre dentro 
+	del archivo y sino lo encontró almacenará el valor -1. El perfil de esta acción es: El campo Sw se incluye para borrado lógico: 
+	verdadero está borrado, falso está activo. 
+	TEstudiante= <Nombre ∈ cadena, Calle ∈ cadena, Ciudad ∈ cadena, CodigoPostal ∈ cadena, Edad ∈ Z, Sw ∈ Lógico >
+	TFichero= archivo de TEstudiante
+	Acción Buscar (dato: f e TFichero, Nom e cadena, resultado: Pos e Z)
+	Léxico local
+		encontrado e Lógico
+		vA e TEstudiante
+	Inicio
+		Si ( EOF(f) ) entonces
+			Salida: El archivo está vacío
+			pos <-- 0
+		sino
+			encontrado <-- Falso
+			Mientras ( no(EOF(f)) y no(encontrado) ) hacer
+				Leer(f, vA)
+				Si ( no(vA.Sw) ) entonces
+					Si ( vA.nom = Nom ) entonces
+						encontrado <-- Verdadero
+						pos <-- PosicionActual(f)
+					Fsi
+				Fsi
+			Fmientras
+			Si ( encontrado ) entonces
+				// pos <-- PosicionActual(f)
+				// el pos ya tiene la posicion del registro
+			sino
+				pos <-- (-1)
+			Fsi
+		Fsi
+	Facción
+
+Ej.4) Suponiendo que tenemos un archivo con 100 registros cómo máximo del tipo TEstudiante definido en el ejercicio anterior. 
+	Desarrolla un algoritmo que almacene en un arreglo unidimensional los nombres de los estudiantes, su edad y la nota que le corresponda. 
+	Los datos de cada alumno se obtienen del fichero y las notas son ingresadas por la entrada. 
+	Una vez cargado el arreglo se debe mostrar su contenido por la salida y antes de terminar el algoritmo se deben pasar los datos del arreglo 
+	a un archivo llamado Notas.dat
+
+Algoritmo
+	N = 100
+	TEstudiante= <Nombre ∈ cadena, Calle ∈ cadena, Ciudad ∈ cadena, CodigoPostal ∈ cadena, Edad ∈ Z, nota e R, Sw ∈ Lógico >
+	TArreglo = arreglo [1..N] de TEstudiante
+	TData = < a e TArreglo, cant e (0..120) >
+	TFichero = Archivo de TEstudiante
+	Acción CargarArchivo(resultado fA e TFichero)
+	Léxico local
+		rta e Lógico
+		vA e TEstudiante
+	Inicio
+		Abrir ("est.dat", fA, e)
+		Repetir
+			Entrada: rta	// ¿Desea cargar? Verdadero / Falso
+			Si ( rta ) entonces
+				Entrada: vA.Nombre
+				Entrada: vA.Calle
+				Entrada: vA.Ciudad
+				Entrada: vA.CodigoPostal
+				Entrada: vA.Edad
+				vA.Sw <-- Falso
+				vA.nota <-- (-1)
+				Entrada: rta
+			Fsi
+			Escribir(fA, vA)
+		Hasta que ( no(rta) )
+		Cerrar(fA)
+	Facción
+	Acción CargarArreglo(dato fA e TFichero, resultado arr e TData)
+	Léxico local
+		i e Z
+		vA e TEstudiante
+	Inicio
+		// no necesito abrir el archivo porque ya viene abierto desde el parámetro
+		IrPos(fA, 0)	// aseguro que la posición esté al comienzo
+		Entrada: arr.cant
+		i <-- 0
+		Mientras ( i < arr.cant ) hacer
+			i <-- i + 1
+			Leer(fA, vA)
+			arr.a[i].Nombre <-- vA.Nombre
+			arr.a[i].Calle <-- vA.Calle
+			arr.a[i].Ciudad <-- vA.Ciudad
+			arr.a[i].CodigoPostal <-- vA.CodigoPostal
+			arr.a[i].Edad <-- vA.Edad
+			arr.a[i].Sw <-- vA.Sw
+			Entrada: arr.a[i].nota
+		Fmientras
+	Facción
+	Acción MostrarArreglo(dato arr e TData)
+	Léxico local
+		i e Z
+	Inicio
+		Para ( i <-- 1 , i <= arr.cant , i <-- i + 1 ) hacer
+			Si ( no(arr.a[i].Sw) ) entonces
+				Salida: arr.a[i].Nombre
+				Salida: arr.a[i].Calle
+				Salida: arr.a[i].Ciudad
+				Salida: arr.a[i].CodigoPostal
+				Salida: arr.a[i].Edad
+				Si ( arr.a[i].nota <> -1 ) entonces
+					Salida: arr.a[i].nota
+				Fsi
+			Fsi
+		Fpara
+	Facción
+	Acción PasarAArchivo(dato arr e TData, resultado finalA e TFichero)
+	Léxico local
+		i e Z
+		vA e TEstudiante
+	Inicio
+		Abrir("Notas.dat", finalA, a)
+		Para ( i<--1 , i <= arr.cant , i <-- i+1 ) hacer
+			Si ( no(arr.a[i].Sw) ) entonces
+				vA.Nombre <-- arr.a[i].Nombre
+				vA.Calle <-- arr.a[i].Calle
+				vA.Ciudad <-- arr.a[i].Ciudad
+				vA.CodigoPostal <-- arr.a[i].CodigoPostal
+				vA.Edad <-- arr.a[i].Edad
+				vA.Sw <-- arr.a[i].Sw
+				vA.nota <-- arr.a[i].nota
+				Escribir(finalA, vA)
+			Fsi
+		Fpara
+		Cerrar(finalA)
+	Facción
+	fOld, fNew e TFichero
+	arreglo e TData
+Inicio
+	CargarArchivo(fOld)
+	Abrir ("est.data", fOld, l)
+	CargarArreglo(fOld, arreglo)
+	Cerrar(fOld)
+	MostrarArreglo(arreglo)
+	PasarAArreglo(arreglo, fNew)
+Fin
+
+Implementación del modelo de secuencia con marca inicial empleando arreglos
+
+5) Dado un arreglo de caracteres ya cargado, desarrolla un algoritmo que informe cuántos veces se repite la letra ‘E’ en dicho arreglo. 
+	Tratar los caracteres del arreglo como una secuencia con marca inicial.
+Algoritmo LetraRepetida
+Léxico
+	Max = 250
+	TElem = caracter
+	Tarre = arreglo[1..Max] de TElem
+	TData = <a ∈ Tarre, cant ∈ (0..Max)>
+	q ∈ TData
+	i, contador e Z
+	lettCmp e Caracter
+	Acción CargarArreglo(resultado arr e TData)	// ya carga el arreglo de caracteres
+Inicio
+	CargarArreglo(q)						// Inic adq
+	contador <-- 0							// Inic adq
+	Si ( q.cant = 0 ) entonces		// <fin sec>
+		Salida: "El arreglo está vacío."	// Trat por sec vacía
+	sino							// no <fin sec>
+		lettCmp <-- 'E'						// Inic trat
+		i <-- 0								// Inic trat
+		Repetir
+			i <-- i + 1						// Obt sig E.C.
+			Si ( q.a[i] = lettCmp ) entonces	// Trat E.C.
+				contador <-- contador + 1	// Trat E.C.
+			Fsi									// Trat E.C.
+		Hasta que ( i >= q.cant)	// <se llegue o supere la marca>
+	Fsi
+	Salida: contador						// Trat final
+Fin
+
+6) Desarrolle un algoritmo que resuelva la siguiente situación: se posee información de estudiantes de un curso, almacenada en un registro, 
+	cuya representación gráfica se observa en la siguiente figura:
+
+Nombre y apellido: 			Nombre y apellido: 		...		Nombre y apellido: 
+DNI:							DNI:						...		DNI:		
+Edad:							Edad:						...		Edad:		
+Cant Mat. Aprob:				Cant Mat. Aprob:			...		Cant Mat. Aprob:	
+Cant Mat. Desaprob:			Cant Mat. Desaprob:		...		Cant Mat. Desaprob:	
+
+Cant Estudiantes:
+
+Se solicita que, dado el DNI de un estudiante, el algoritmo muestre por pantalla si el alumno ha aprobado más materias de las que ha desaprobado
+Tenga en cuenta:
+	Debe definir el registro de Estudiantes.
+	Asuma que la carga de los datos de todos los estudiantes ya se ha realizado. 
+	Analice y justifique qué esquema ha utilizado para resolver el problema planteado.
+	En el algoritmo (resuelto con pseudocódigo), destaque las partes del esquema utilizado. 
+	Usar arreglos.
+
+Algoritmo MasAprobQueDesapr
+Léxico
+	NMax = 256
+	TEstudiantes = < nom e Cadena, apellido e Cadena, dni e Z, edad e (1..120), cantApr e N, cantDesapr e N >
+	TArreglo = arreglo [1..NMax] de TEstudiantes
+	TData = < a e TArreglo, cant e (0..256) >
+	arreglo e TData
+	i, buscarDni e Z
+	encontrado e Lógico
+	Acción CargarArreglo(resultado ar e TData)		// Ya viene cargado
+	Acción TratarEC(dato ar e TData, indice e Z, lfDni e Z, resultado enc e Lógico)
+	Inicio
+		enc <-- ar.a[indice].dni = lfDni
+	Faccion
+	Acción TratFinalElemHallado(dato ar e TData, indice e Z)
+	Inicio
+		Según
+			( arreglo.a[indice].cantApr < arreglo.a[indice].cantDesapr ) : 
+				Salida: "El alumno " + alumno.a[indice].apellido + alumno.a[indice].nom + " tiene menos aprobadas que desaprobadas".
+			( arreglo.a[indice].cantApr > arreglo.a[indice].cantDesapr ) : 
+				Salida: "El alumno "+ alumno.a[indice].apellido + alumno.a[indice].nom + " tiene más aprobadas que desaprobadas".
+			Otros:	Salida: "El alumno " + alumno.a[indice].apellido + alumno.a[indice].nom + " tiene iguales aprobadas que desaprobadas".
+		Fsegún
+	Facción
+Inicio
+// Utilizo un esquema B de marca inicial, porque voy a recorrer la secuencia hasta encontrar cierta propiedad, que es que se cumpla que el
+// arreglo en la posición del índice en el campo dni coincida con el dni que el usuario está buscando. Luego de eso, si el elemento fue hallado
+// hago un tratamiento por haberlo encontrado, sino hago un tratamiento por el elemento no hallado. Además se constata la secuencia vacía.
+	CargarArreglo(arreglo)			// Inic de la adq
+	Si ( arreglo.cant = 0 ) entonces			// <fin sec>
+		Salida: "El arreglo está vacío"	// Trat por sec vacía
+	sino										// no <fin sec>
+		Entrada: buscarDni			// Inic del trat
+		i <-- 0							// Inic del trat
+		encontrado <-- Falso			// Inic del trat
+		Mientras ( i < arreglo.cant y no(encontrado) ) hacer	// < no fin sec y no(P(E.C.))>
+			i <-- i + 1					// Obtener sig elem
+			TratarEC(arreglo, i, buscarDni, encontrado)	// Tratar E.C.
+		Fmientras
+		Si ( encontrado ) entonces
+			TratFinalElemHallado(arreglo, i)
+		sino
+			Salida: "No se ha encontrado el alumno pedido"
+		Fsi
+	Fsi
+Fin
+
+7) Desarrollar un algoritmo que solicite al usuario una secuencia de caracteres, la almacene en un arreglo, e informe si la cantidad de 
+	caracteres 'E' es mayor que la cantidad de caracteres 'A'. Dentro del léxico del algoritmo deben incluir un comentario indicando qué tipo 
+	de marca utilizarán: marca real o marca virtual
+
+Algoritmo CantLetrasMayorAOtra
+Léxico
+	N = 256
+	TArreglo = arreglo [1..N] de Caracter
+	TData = < a e TArreglo, cant e (0..N) >
+	carPri, carSeg e Caracter
+	i, contPri, contSeg e Z
+	arreglo e TData
+	Acción TratFinal (dato contadorPrimera e Z, contadorSegunda e Z)
+	Inicio
+		Según
+			( contadorPrimera = 0 y contadorSegunda = 0 ) : 
+				Salida: "No se cargaron letras comparativas en el arreglo"
+			( contadorPrimera = 0 y contadorSegunda <> 0 ) : 
+				Salida: "La cantidad de caracteres " contadorSegunda " es mayor o igual a la de " contadorPrimera
+			( contadorPrimera <> 0 y contadorSegunda = 0 ) : 
+				Salida: "La cantidad de caracteres " contadorPrimera " es mayor a la de " contadorSegunda
+			Otros: 
+				Según
+					( contadorPrimera > contadorSegunda ) :
+						Salida: "La cantidad de caracteres " contadorPrimera " es mayor a la de " contadorSegunda
+					( contadorPrimera < contadorSegunda )
+						Salida: "La cantidad de caracteres " contadorSegunda " es mayor a la de " contadorPrimera
+					Otros:
+						Salida: "La cantidad de caracteres comparativos son iguales"
+				Fsegún
+		Fsegún
+	Facción
+	// Utilizo marca virtual. Porque no llego necesariamente hasta un elemento específico en el recorrido de la secuencia, sino que voy hasta
+	// lo último cargando y preguntando si lo que se cargó fue la primer letra o la segunda y llevando un conteo sobre eso.
+	// Utilicé un esquema R1 de marca final
+Inicio
+	Entrada: arreglo.cant
+	contPri <-- 0
+	contSeg <-- 0
+	carPri <-- 'E'
+	carSeg <-- 'A'
+	Para ( i <-- 1 , i <= arreglo.cant , i <-- i + 1 ) hacer
+		Entrada: arreglo.a[i]
+		Si ( arreglo.a[i] = carPri ) entonces
+			contPri <-- contPri + 1
+		Fsi
+		Si ( arreglo.a[i] = carSeg ) entonces
+			contSeg <-- contSeg + 1
+		Fsi
+	Fpara
+	TratFinal (contPri, contSeg)
+Fin
+
+8) Dado un arreglo de caracteres ya cargado, de acuerdo al siguiente léxico
+Algoritmo CantDiptongos
+Léxico
+	Max = 250
+	TElem = caracter
+	Tarre = arreglo[1..Max] de TElem
+	TData = <a ∈ Tarre, cant ∈ (0..Max)>
+	q ∈ TData
+	i, cantDiptongos e Z
+	Acción CargarArreglo (resultado arr e TData)
+	Función EsVocal (dato car e Caracter) --> Lógico
+	Inicio
+		<-- car = 'a' o car = 'A' o car = 'e' o car = 'E' o car = 'I' o car = 'i' o car = 'o' o car = 'O' o car = 'u' o car = 'U'
+	Ffunción
+	// Desarrollar un algoritmo que informe cuantos diptongos (dos vocales seguidas) aparecen en la secuencia
+Inicio
+	CargarArreglo(q)
+	Si ( q.cant = 0 ) entonces
+		Salida: "El arreglo está vacío"
+	sino
+		// Utilizo marca inicial para que sea seguro usar i+1 en la última posición
+		i <-- 0
+		cantDiptongos <-- 0
+		Mientras ( i < q.cant - 1 ) hacer	// voy hasta q.cant - 1 para poder comparar de a dos de forma segura
+			i <-- i + 1	// primer elemento válido
+			Si ( EsVocal ( q.a[i] ) y EsVocal ( q.a[i+1] ) ) entonces	// Si en la posición i es vocal y en la posición i+1 es vocal entonces hay diptongo
+				cantDiptongos <-- cantDiptongos + 1
+			Fsi
+		Fmientras
+		Salida: cantDiptongos
+	Fsi
+Fin
+
+9) Dada una secuencia de números enteros cargada en un arreglo de números, desarrollar un algoritmo que calcule el promedio de todos 
+	los números que le siguen al primer número 2 encontrado en la secuencia. Dentro del léxico del algoritmo deben incluir un comentario 
+	indicando que tipo de marca utilizarán: marca real o marca virtual.
+
+Algoritmo CalcularPromedioDspsNro2
+Léxico
+	N = 256
+	TArreglo = arreglo [1..N] de Z
+	TData = < a e TArreglo, cant e (0..N) >
+	i, j, lfNum e Z
+	sumador, prom e R
+	arreglo e TData
+	// Voy a usar marca real
+Inicio
+	Entrada: arreglo.cant
+	Si ( arreglo.cant <> 0 ) entonces	// no<fin sec> : acciones
+		Entrada: lfNum	// lfNum = 2
+		Para ( i <-- 1 , i <= arreglo.cant y arreglo.a[i] <> lfNum , i <-- i + 1 ) hacer	// o fin de secuencia o llego a la marca real (2)
+			// i <-- i + 1 ya lo hace el para. Hago una búsqueda del primer nro que se busca. En este caso el 2
+		Fpara
+		Si ( i <= arreglo.cant ) entonces
+			sumador <-- 0
+			j <-- 0
+			Mientras ( i <= arreglo.cant ) hacer
+				sumador <-- q.a[i] + sumador
+				i <-- i + 1
+				j <-- j + 1
+			Fmientras
+			prom <-- sumador / j
+		sino
+			Salida: "No se encontró el número que se quería comparar en la secuencia"
+		Fsi
+	Fsi	// <fin sec> : nada
+Fin
+
+Implementación del modelo de secuencia con marca inicial empleando memoria dinámica
+
+10) Dada una Lista simplemente encadenada (LSE con ficticio) de caracteres, donde las letras forman una frase. El puntero Cab que 
+	apunta a la lista, desarrolle un algoritmo que cuente cuántos palabras terminan con la letra “a”. Cada nodo es de la forma 
+	elem=<info ∈ Carater, next ∈ puntero de elem>.
+
+Algoritmo PalabrasTermConA
+Léxico
+	TElem = < info ∈ Carater, next ∈ puntero de TElem >
+	Acción CargarLista(resultado q e puntero a TElem)
+	Léxico local
+		aux, aux2 e puntero a TElem
+		rta e Lógico
+	Inicio
+		Obtener(q)
+		aux <-- q
+		Entrada: rta	// ¿Cargar caracter?
+		Mientras ( rta ) hacer
+			Obtener(aux2)
+			Entrada: (^aux2).info
+			(^aux2).next <-- nil
+			(^aux).next <-- aux2
+			aux <-- aux2
+		Fmientras
+	Facción
+	cab, aux e puntero a TElem
+	pri, seg e Caracter
+	contador e Z
+Inicio
+	CargarLista(cab)
+	aux <-- cab
+	Si ( (^aux).next = nil ) entonces
+		Salida: "La lista está vacía"
+	sino
+		contador <-- 0												/* Funciona para frases empezadas en 'a'
+		Repetir													aux <-- (^aux).next
+			aux <-- (^aux).next									contador <-- 0
+			pri <-- (^aux).info										seg <-- (^aux).info
+			Si ( (^aux).next <> nil ) entonces						Si ( seg = 'a' ) entonces
+				seg <-- (^(^aux).next).info							contador <-- contador + 1
+			sino													Fsi
+				seg <-- ' '											Mientras ( (^aux).next <> nil ) hacer
+			Fsi															aux <-- (^aux).next
+			Si ( pri = 'a' y seg = ' ' ) entonces							pri <-- seg
+				contador <-- contador + 1							seg <-- (^aux).info
+			Fsi															Si ( pri = ' ' y seg = 'a' ) entonces
+		Hasta que ( (^aux).next = nil )									contador <-- contador + 1
+		Salida: contador												Fsi
+	Fsi																Fmientras
+																	Salida: contador */
+Fin
+
+11) Dada una Lista simplemente encadenada (LSE con ficticio) de números enteros con una variable puntero Cab que apunta a la lista, 
+	desarrolle un algoritmo que cuente cuántos números positivos tiene la secuencia. Cada nodo es de la forma 
+	elem=<info ∈ Ζ, next ∈ puntero de elem>.
+
+Algoritmo ContNrosPositivos
+Léxico
+	TElem = < info ∈ Z, next ∈ puntero de TElem >
+	Acción CargarLista(resultado q e puntero a TElem)
+	Léxico local
+		aux, aux2 e puntero a TElem
+		rta e Lógico
+	Inicio
+		Obtener(q)
+		aux <-- q
+		Entrada: rta	// ¿Cargar número?
+		Mientras ( rta ) hacer
+			Obtener(aux2)
+			Entrada: (^aux2).info
+			(^aux2).next <-- nil
+			(^aux).next <-- aux2
+			aux <-- aux2
+		Fmientras
+	Facción
+	cab, aux e puntero a TElem
+	contador e Z
+Inicio
+	CargarLista(cab)
+	aux <- cab
+	Si ( (^aux).next = nil ) entonces
+		Salida: "La lista está vacía"
+	sino
+		contador <-- 0
+		Repetir
+			aux <-- (^aux).next
+			Si ( (^aux).info >= 0 ) entonces
+				contador <-- contador + 1
+			Fsi
+		Hasta que ( (^aux).next = nil )
+		Salida: contador
+	Fsi
+Fin
+
+12) Dada un Lista Doblemente Encadenada (LDE) de números enteros que implementa una secuencia con marca inicial, ordenados de menor 
+	a mayor, desarrolle una acción que inserte un número (que será pasado cómo parámetro al igual que el puntero cabeza de la LDE) y 
+	mantenga la LDE ordenada.
+
+Algoritmo InsertarOrdenada
+Léxico
+	TNodo = < info e Z, next e puntero a TNodo, back e puntero a TNodo >
+	Acción CargarLDEfictOrd (resultado q, u e puntero a TNodo)
+	Léxico local
+		aux, aux2 e puntero a TNodo
+		rta e Lógico
+	Inicio
+		Obtener (q)
+		Obtener (u)
+		(^u).next <-- nil
+		(^u).back <-- q
+		(^q).next <-- u
+		(^q).back <-- nil
+		aux <-- q
+		Entrada: rta 	// ¿Cargar?
+		Mientras ( rta ) entonces
+			Obtener (aux2)
+			Entrada: (^aux2).info
+			(^aux2).next <-- u
+			(^aux2).back <-- (^u).back
+			(^u).back <-- aux2
+			(^aux).next <-- aux2
+			aux <-- aux2
+			Entrada: rta
+		Fmientras
+		SelectionSort(q, u)	// Ordenar
+	Facción
+	Acción InsertarOrdenado (dato elem e Z, q e puntero a TNodo, u e puntero a TNodo)
+	Léxico local
+		aux, aux2 e puntero a TNodo
+	Inicio
+		aux <-- q
+		Si ( (^aux).next = nil ) entonces
+			Salida: "Lista vacía"
+		sino
+			Repetir
+				aux <-- (^aux).next
+			Hasta que ( (^aux).next = u o elem < (^aux).info )
+			Si ( elem >= (^aux).info ) entonces
+				Obtener (aux2)
+				(^aux2).info <-- elem
+				(^aux2).next <-- (^aux).next
+				(^aux2).back <-- aux
+				(^(^aux).next).back <-- aux2
+				(^aux).next <-- aux2
+			Fsi
+		Fsi
+	Facción
+	puntIni, puntFin e puntero a TNodo
+	insElem e Z
+Inicio
+	CargarLDEOrd (puntIni, puntFin)
+	Entrada: insElem
+	InsertarOrdenado (insElem, puntIni, puntFin)
+Fin
+
+13) Dada una Lista simplemente encadenada (LSE con ficticio) de números enteros ordenados de menor a mayor con una variable puntero 
+	Cab que apunta a la lista, desarrolle un algoritmo que muestre por pantalla los números que siguen en la lista al primer número a dado 
+	por el usuario. Cada nodo es de la forma 
+	elem=<info ∈ Ζ, next ∈ puntero de elem>
+
+Algoritmo MostrarSigsAlPedido
+Léxico
+	TElem = < info ∈ Z, next ∈ puntero de TElem >
+	Acción CargarLSEOrd(resultado q e puntero a TElem)
+	Léxico local
+		aux, aux2 e puntero a TElem
+		rta e Lógico
+	Inicio
+		Obtener(q)
+		aux <-- q
+		Entrada: rta	// ¿Cargar número?
+		Mientras ( rta ) hacer
+			Obtener(aux2)
+			Entrada: (^aux2).info
+			(^aux2).next <-- nil
+			(^aux).next <-- aux2
+			aux <-- aux2
+		Fmientras
+		InsertionSort(q)	//Ordenar
+	Facción
+	cab, aux e puntero a TElem
+	lfElem e Z
+Inicio
+	CargarLSEOrd (cab)
+	Si ( (^cab).next = nil ) entonces
+		Salida: "Lista vacía"
+	sino
+		aux <-- cab
+		Entrada: lfElem
+		Repetir
+			aux <-- (^aux).next
+		Hasta que ( (^aux).next = nil o lfElem = (^aux).info )
+		Si ( lfElem = (^aux).info ) entonces
+			Si ( (^aux).next <> nil ) entonces
+				Repetir
+					aux <-- (^aux).next
+					Salida: (^aux).info
+				Hasta que ( (^aux).next = nil )
+			sino
+				Salida: "No hay números luego del elemento pedido"
+			Fsi
+		sino
+			Salida: "No se pudo encontrar el número pedido"
+		Fsi
+	Fsi
+Fin
+
+14) Dada una Lista simplemente encadenada (LSE con ficticio) que almacena la información de los empleados de una fábrica mediante registro 
+	pers=<ape∈ cadena, nom∈ cadena, antigüedad ∈ Ν, basico ∈ R>, dónde ape es el apellido, nom el nombre, antigüedad es la cantidad 
+	de años de antigüedad en el trabajo y básico el sueldo básico, desarrolle un algoritmo que liste todos los datos del personal y el sueldo
+	que corresponde a cada empleado calculado con el básico mas $ 30 por cada año de antigüedad. La lista tiene una variable puntero Cab 
+	apuntando a la lista. Cada nodo es de la forma elem=<info ∈ pers, next ∈ puntero de elem>
+
+Algoritmo ListarPersonalSueldoActualizado
+Léxico
+	TPers = <ape ∈ cadena, nom ∈ cadena, antigüedad ∈ Ν, basico ∈ R>
+	TNodo = < info e TPers, next e puntero a TNodo >
+	Acción CargarLSEfict (resultado q e puntero a TNodo)		// ya carga la lista
+	Acción ListarDatos(dato q e puntero a TNodo)
+	Inicio
+		Si ( (^q).next = nil ) entonces
+			Salida: "La lista está vacía"
+		sino
+			Repetir
+				q <-- (^q).next
+				Salida: (^q).info.ape
+				Salida: (^q).info.nom
+				Salida: (^q).info.antiguedad
+				Salida: ( (^q).info.antiguedad * 30 + (^q).info.basico )	// Sueldo actualizado del empleado
+			Hasta que ( (^q).next = nil )
+		Fsi
+	Facción
+Inicio
+	CargarLSEfict(cab)
+	ListarDatos(cab)
+Fin

@@ -1,0 +1,274 @@
+	BubbleSort lleva el más "pesado" al ultimo. Es estable. Es lento. Hay mejoras de los métodos. 
+	InsertionSort agarra el primero y pregunta por los que le siguen, y va ordenando. pasa al siguiente y hace lo mismo. Es estable.
+Si ya hay una parte ordenada es mas eficiente. 
+	SelectionSort agarra el mas chico de todos y va comparando si los demas son menores o iguales. si alguno es menor o igual los intercambia.
+Mover significa tomar el que le sigue como si fuese el mas chico de todos. Siempre los pone a la derecha si encuentra.
+	QuickSort agarra uno del medio (pivot) y los menores los manda a la izq y a los mayores a la derecha. Avanzar significa tomar uno del medio
+de algun lado y preguntar de nuevo.
+// acceso secuencial tmb en acceso ordenado
+iniciar el recorrido en la estructura
+preguntar por el final de la estructura o si voy encontrando lo que quiero
+	avanzar
+si llegue al final
+	no encontre
+sino (encontre lo que quiero)
+	encontre
+fsi
+
+// pasado a la carpeta
+	Act 1
+Ej.1) Considere un arreglo ya cargado con registros. Los registros contienen datos relacionados con
+libros. Cada uno de los registros almacena: título del libro, apellido del autor, año de publicación, número
+de páginas y nombre de la editorial. Los registros están ordenados por apellido del autor.
+Desarrolle un algoritmo que, dado el apellido de un autor, informe si existe, o no, al menos un libro de ese
+autor. El arreglo ya está cargado y podría estar vacío. Use
+
+Max= 256
+Telem = < titulo e Cadena, apellido e Cadena, año e Z, nroPag e Z, nomEdit e Cadena >
+Tarre= arreglo[1..Max] de TElem
+TData = <a ∈ Tarre, cant ∈ 0..Max+1)>
+
+Algoritmo ExisteLibroDelAutor
+Léxico
+	Max= 256
+	Telem = < titulo e Cadena, apellido e Cadena, año e Z, nroPag e Z, nomEdit e Cadena >
+	Tarre= arreglo[1..Max] de TElem
+	TData = <a ∈ Tarre, cant ∈ 0..Max+1)>
+	Acción CargarArreglo(resultado arr e TData)
+	arreglo e TData
+	i e Z
+	apellido, msg e Cadena
+Inicio
+	Entrada: apellido
+	i <-- 1
+	CargarArreglo(arreglo)
+	Mientras ( i <= arreglo.cant y apellido <> arreglo.a[i] ) hacer
+		i <-- i + 1
+	Fmientras
+	Si ( i = Max + 1 o arreglo.cant = 0) entonces
+		msg <-- "No encontrado"
+		Salida: msg
+	sino
+		msg <-- "El autor tiene libros"
+		Salida: msg
+	Fsi
+Fin
+
+// pasado a carpeta
+	Act 2
+Ej. 2) Desarrolle, utilizando recursión, la acción de búsqueda secuencial de un elemento k sobre un
+arreglo A de dimensión n, que está ordenado. En caso de encontrarlo la acción debe retornar la posición
+dónde fue encontrado, y en caso contrario debe retornar el valor -1.
+
+Acción BusqSecRec(dato k e TElem, a e arreglo [1..n] de TElem, i e (1..n+1), dato/resultado pos e Z)
+{Pre: i = 1}
+Inicio
+	Si ( i = n + 1 ) entonces
+		nada
+	sino
+		Si ( a[i] = k ) entonces
+			pos <-- i
+		sino
+			BusqSecRec(k, a, i+1, -1)
+		Fsi
+	Fsi
+Facción
+
+// pasado a la carpeta
+	Act 3
+Ej.3) Un arreglo de 100 elementos cómo máximo contiene números enteros ordenados de menor a mayor.
+Desarrolle un algoritmo que, dado un número entero, aplique búsqueda binaria para informar si dicho
+número se encuentra o no en el arreglo. En caso de encontrarlo, informe la posición del número en el
+arreglo y sino que informe que no está en el arreglo.
+
+Algoritmo BusquedaBinariaEstaONo
+Léxico
+	NMax = 100
+	TArreglo = arreglo [1..NMax] de Z
+	TData = < a e TArreglo, cant e (0..NMax) >
+	Acción CargarArreglo(resultado q e TData)
+	arreglo e TArreglo
+	nCmp, pos, i, pivot, inf, sup e Z
+	msg e Cadena
+Inicio
+	Entrada: nCmp
+	i <-- 1
+	Si ( i > arreglo.cant ) entonces
+		msg <-- "El arreglo está vacío"
+		Salida: msg
+	sino
+		Según
+			( nCmp < arreglo.a[1] o nCmp > arreglo.a[arreglo.cant] ) : msg <-- "No está en el arreglo"
+																			Salida: msg
+			( nCmp >= arreglo.a[1] y nCmp <= arreglo.a[arreglo.cant] ) : inf <-- 1
+																			    sup <-- arreglo.cant
+																			    Mientras ( inf < sup ) hacer
+																					pivot <-- ( inf+sup ) div 2
+																					Según
+																						( nCmp > arreglo.a[pivot] ) : inf <-- pivot + 1
+																						( nCmp <= arreglo.a[pivot] ) : sup <-- pivot
+																					Fsegún
+																			    Fmientras
+																			    Según
+																				( arreglo.a[inf] = nCmp ) : pos <-- inf
+																											 Salida: pos // Salida: inf
+																				( arreglo.a[inf] <> nCmp ) : msg <-- "No está en el arreglo"
+																											    Salida: msg
+																												// pos <-- -1
+																											   	// Salida: pos 
+																			    Fsegún
+		Fsegún
+	Fsi
+Fin
+
+/*		
+		pivot <-- q.cant div 2
+		Si ( arreglo.a[pivot] = nCmp ) entonces
+			Salida: pivot
+		sino
+			Mientras ( pivot <> 1 y arreglo.a[pivot] < nCmp ) hacer
+				pivot <-- pivot div 2
+			Fmientras
+			Si ( pivot = 1 ) entonces
+				msg <-- "No está en el arreglo"
+			sino
+				Si ( arreglo.a[pivot] = nCmp ) entonces
+					Salida: pivot
+				sino
+					msg <-- "No está en el arreglo"
+				Fsi
+			Fsi
+		Fsi
+	Fsi
+Fin
+*/
+
+// pasado a la carpeta
+Ej. 4) Desarrolle, utilizando recursión, la acción de búsqueda binaria o dicotómica de un elemento k sobre
+un arreglo A de dimensión n ordenado. En caso de encontrarlo la acción debe retornar la posición dónde
+fue encontrado, y en caso contrario debe retornar el valor -1.
+
+Acción BuscarElemento(dato k e TElem, q e TData, pivot e Z, inf e Z, sup e Z, dato/resultado pos e Z)
+{Pre: q cargado, pivot = 0, inf = 1, sup = q.cant}
+Inicio
+	Si ( q.cant = 0 ) entonces
+		nada
+	sino
+		pivot <-- (inf+sup) div 2
+		Según
+			( q.a[pivot] = k ) : 
+				pos <-- pivot
+			( q.a[pivot] <> k ) : 
+				Según
+					( q.a[pivot] > k ) : 
+						// Si el elemento que estoy buscando es mas chico que el que esta en la posicion del pivot en el arreglo:
+						q.cant <-- q.cant - 1
+						BuscarElemento(k, q, pivot, inf, pivot, -1) // Busco a la izquierda del pivot/Achico el superior hasta el pivot
+					( q.a[pivot] < k ) : 
+						// Si el elemento que estoy buscando es mas grande que el que esta en la posicion del pivot en el arreglo:
+						q.cant <-- q.cant - 1
+						BuscarElemento(k, q, pivot, inf+1, sup, -1) // Busco a la derecha del pivot/Sigo buscando normal pero corriendo el inferior una posicion más
+				Fsegún
+		Fsegún
+	Fsi
+Facción
+
+
+Ej. 5) Dados los ocho enteros 1,7,3,2,0,5,0,8, escriba la traza correspondiente cuando se los ordena por
+medio de:
+	7.a) Ordenamiento por Burbuja
+	7.b) Ordenamiento por Inserción
+	7.c) Ordenamiento por Selección
+
+[1, 7, 3, 2, 0, 5, 0, 8]
+	Cambio en el algoritmo para que no recorra siempre hasta el final
+	Inicio
+		b <-- TRUE
+		 i <-- N
+		 mientras( i>1 y b ) hacer
+			b <-- FALSE
+			 j <-- 1
+			 mientras j<i hacer
+			 	si s[j]>s[j+1] entonces 
+					Intercambiar(s[j],s[j+1])
+					b <-- TRUE
+				 fsi
+			 	 j <-- j+1
+			 fmientras
+		 i <-- i-1
+		 fmientras
+	Fin
+
+ 7a) Burbuja											7b) Inserción
+[1, 7, 3, 2, 0, 5, 0, 8]									[1, 7, 3, 2, 0, 5, 0, 8]
+ [1, 3, 7, 2, 0, 5, 0, 8]									
+  [1, 3, 2, 7, 0, 5, 0, 8]									
+   [1, 3, 2, 0, 7, 5, 0, 8]									
+    [1, 3, 2, 0, 5, 7, 0, 8]									
+     [1, 3, 2, 0, 5, 0, 7, 8]									
+      [1, 3, 2, 0, 5, 0, 7, 8]									
+														
+[1, 3, 2, 0, 5, 0, 7, 8]									
+ [1, 3, 2, 0, 5, 0, 7, 8]									
+  [1, 2, 3, 0, 5, 0, 7, 8]									
+   [1, 2, 0, 3, 5, 0, 7, 8]									
+    [1, 2, 0, 3, 5, 0, 7, 8]									
+     [1, 2, 0, 3, 0, 5, 7, 8]									
+      [1, 2, 0, 3, 0, 5, 7, 8]									
+																		
+[1, 2, 0, 3, 0, 5, 7, 8]									
+ [1, 0, 2, 3, 0, 5, 7, 8]									
+  [1, 0, 2, 3, 0, 5, 7, 8]									
+   [1, 0, 2, 0, 3, 5, 7, 8]									
+    [1, 0, 2, 0, 3, 5, 7, 8]									
+																		
+[0, 1, 2, 0, 3, 5, 7, 8]									
+ [0, 1, 2, 0, 3, 5, 7, 8]									
+  [0, 1, 0, 2, 3, 5, 7, 8]									
+   [0, 1, 0, 2, 3, 5, 7, 8]									
+																		
+[0, 1, 0, 2, 3, 5, 7, 8]									
+ [0, 0, 1, 2, 3, 5, 7, 8]									
+  [0, 0, 1, 2, 3, 5, 7, 8]									
+																		
+[0, 0, 1, 2, 3, 5, 7, 8]									
+ [0, 0, 1, 2, 3, 5, 7, 8]									
+																		
+[0, 0, 1, 2, 3, 5, 7, 8]									
+
+Ej. 6) Supóngase que se está ordenando un arreglo que consta de la primera parte ordenada, seguido de
+unos cuantos números aleatorios aún no ordenados. ¿Cuál de los métodos de ordenamiento vistos será
+especialmente apto para la tarea?
+
+// inserción
+seleccion agarra el mas chico de todos y lo pasa a la izquierda de todos
+
+Ej. 7) Un algoritmo se dice estable si conserva el orden relativo de los elementos con el mismo valor.
+¿Cuáles de los siguientes algoritmos de ordenamiento son estables?:
+	10.a) Ordenamiento por Burbuja (intercambio), ordenamiento por Inserción, ordenamiento por Selección.
+	10.b) Utilizando un algoritmo estable, ordene por nombre el arreglo del ejercicio 7) y luego por apellido.
+
+burbuja e insercion son estables
+
+
+Ej. 8) Desarrolle un algoritmo que encuentre los k elementos más chicos de un arreglo de longitud n y los
+emita por la salida. ¿Qué método parece más apropiado para este problema?.
+
+selección
+
+
+EJERCICIOS NUEVOS
+// idem a ej 4
+11) Implemente en forma recursiva la accion de busqueda binaria o dicotomica de un elemento k sobre un arreglo a de dimension n ordenado. 
+En caso de encontontrarlo la accion debe retornar la posicion donde fue encontrado, y en caso contrario debe retornar el valor -1.
+
+12) Dada la maquina abstracta de secuencias (MaqSec), que acompaña a esta práctica como anexo, defina recursivamente las sig funciones:
+	a) Long, que dada una secuencia retorna su longitud
+	b) ContA, que dada una secuencia de caracteres retorna la cantidad de letras 'a' presentes en la secuencia.
+	c) AporH, que dada una secuencia de caracteres retorna la secuencia original con todas las letras 'a' cambiadas por 'h'
+
+13)
+
+16) Desarrollar una función recursiva que dados un numero entero cualqiuoera y una secuencia de numeros cargada en una MaqSec(enteros),
+retorne verdadero si y solo si el numero pasado como parametro aparece en la secuencia dada, sino que devuelva falso.
+Puede utilizar las funciones de la MaqSec: vacia, inicializar, prim, fin y conc.

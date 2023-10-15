@@ -1,0 +1,94 @@
+Desarrolle un algoritmo que reciba un arreglo de caracteres y escriba el caracter que le sigue a cada “E” contenido en el arreglo
+
+Esquema a usar: R2 de pares
+
+Algoritmo DespuesE
+Léxico
+	Long=254
+	marca ∈ (0..Long+1)  // número de caracteres cargados en el arreglo + 1
+	car ∈ arreglo (1..Long) de caracter
+	pri, seg ∈ caracter
+	mge ∈ cadena
+	i  ∈ (1..Long+1)
+	Accion Ini-Adq Pares es
+		i← 1
+		Si ( i<> marca ) entonces
+			pri←car[i]
+			i←i +1
+			Si ( i<> marca ) entonces
+				seg ←car[i]
+			Fsi
+		Fsi
+	Faccion
+	Accion ob_sig_par es
+		pri← seg
+		i ← i + 1
+		seg← i
+	Faccion
+Inicio   
+	Ini_adqPares
+	Según
+	    ( i=marca ): 	mge ← ‘secuencia de pares  vacía’
+	                    		salida: mge
+	    ( i <>marca ): Mientras  ( i <> marca ) Hacer
+	                     		Si (  pri=’E’ ) entonces
+	                               		salida: seg            
+	                           	Fsi
+	                     		ob_sig-par        
+	           			Fmientras
+	Fsegun
+Fin
+ 
+
+14) -----------------------------------------------------------------------------------------------------------------------------------
+
+Desarrolle un algoritmo que reciba una lista de caracteres y calcule cuantas palabras contiene a la lista.
+Los caracteres que contiene la lista forman una frase, el espacio en blanco separa a las palabras (hay nodos 
+que solo tiene el caracter espacio en blanco)
+
+ 
+
+Esquema a usar: R2 de pares
+
+Algoritmo cantPal
+	TNodo=<info ∈ caracter , next ∈ Puntero a TNodo >
+	P, aux ∈ Puntero a TNodo
+	pri, seg ∈ Puntero a TNodo
+	mge ∈ cadena
+	cant ∈ Z
+	Accion Ini-Adq Pares es
+		aux ← p
+		Si ( aux <> nil ) entonces
+			pri←aux
+			aux  ← (^aux).next
+			Si ( aux <> nil ) entonces
+				seg ← aux
+			Fsi
+		Fsi
+	Faccion
+	Accion ob_sig_par es
+		pri←seg
+		aux  ← (^aux).next
+		seg ←aux
+  	Faccion
+Inicio
+	Ini_adqPares
+	Según
+			(seg = nil): mge ← ‘secuencia de pares vacía’
+						salida: mge
+			(seg<>nil): cant ← 0
+						Si( (^pri).info ≠ ’ ’ ) entonces
+							cant ← cant + 1
+						Fsi
+						Mientras ( seg<> nil ) Hacer
+							Si ( (^pri).info = ’ ’ y (^seg).info ≠ ’ ’ ) entonces
+				                               cant ← cant + 1
+				            		Fsi
+							ob_sig-par
+						Fmientras
+						Salida: cant
+	Fsegun
+Fin
+
+OTRAS CONSIGNAS:  cuantas palabras empiezan empiezan con una letra dada, cuántas palabras terminan con una letra dada,  
+cuántas veces está la sílaba “ma”, etcétera

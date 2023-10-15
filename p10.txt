@@ -1,0 +1,787 @@
+Miercoles 14/09
+Sab 17/09 los pasé a todos a la carpeta xd
+
+// pasado a carpeta
+	Act 6	(no lo hicimos en clase)
+Ej. 6) Desarrolle un algoritmo que permita leer el contenido de un archivo de texto y muestre por la salida
+su contenido. El archivo de texto a utilizar se supone que ya está creado y se llama frases.txt
+
+Algoritmo LeerUnArchivoDeTexto
+Léxico
+	Acción CargarYCrearArchivo(resultado fA e Archivo de Texto)	// Crea y carga el archivo
+		Léxico local
+			cA e TElem // enteros, caracter, cadena, reales, etc
+	f e Archivo de Texto
+	c e Caracter
+Inicio
+	CargarYCrearArchivo(f)
+	Abrir("frases.txt",f,l)
+	Si ( EOF(f) ) entonces
+		Salida:"El archivo está vacío"
+	sino
+		Mientras( no( EOF(f) ) ) hacer
+			Leer(f, c)
+			Salida:c
+		Fmientras
+	Fsi
+Fin
+
+// pasado a carpeta
+ 	Act 7
+Ej. 7) Desarrolle un algoritmo que permita leer el contenido de un archivo de texto y muestre por la salida
+la cantidad de vocales que contiene. El archivo de texto a utilizar se supone que ya está creado y se llama
+frases.txt
+
+Algoritmo CantidadVocalesEnUnArchivo
+Lexico
+	Accion CrearArchivo(resultado x e Archivo de Texto)	// Suponiendo que la acción va a cargar el archivo frases.txt
+
+	Funcion CantVocales(dato x e Archivo de Texto) --> Z
+	Léxico local
+		sum e Z
+		cA e Caracter
+	Inicio
+		Abrir("frases.txt", x, l)	// Abre "frases.txt", lo llama x, de modo lectura
+// se podria preguntar si eof(f) es verdadero, entonces eso podría decir que en el archivo no hay nada, en vez de que no haya vocales.
+// si sale i = 0 puede significar que eof es falso o que no hay vocales en el archivo. Es otro esquema.
+		Si ( EOF(x) ) entonces
+			Cerrar(x)
+			<-- ( -1 )		// El archivo está vacío
+		sino
+			sum <-- 0
+			Mientras ( no( EOF(x) ) ) hacer
+				Leer(x, cA)
+				Si ( cA = 'A' o cA = 'a' o cA = 'E' o cA = 'e' o cA = 'I' o cA = 'i' o cA = 'O' o cA = 'o' o cA = 'U' o cA = 'u' ) entonces
+					sum <-- sum + 1
+				Fsi
+			Fmientras
+		Fsi
+		Cerrar(x)
+		<-- sum
+	Ffunción
+	f e Archivo de Texto
+	contadorVocales e Z
+Inicio
+	CrearArchivo(f)
+	contadorVocales <-- CantVocales(f)
+	Salida: contadorVocales
+Fin
+
+
+	Act 8
+// pasado a carpeta
+a) ¿Qué hace el siguiente algoritmo?	
+Algoritmo Ejemplo
+Lexico
+	TAlumno = <nombre ∈ Cadena, edad ∈ Z>
+	f ∈ ARCHIVO de TAlumno
+	alumno ∈ TAlumno
+Inicio
+	Abrir("alumnos.dat",f,l)
+	mientras not(EOF(f)) hacer
+		Leer(f,alumno)
+		Salida:alumno // o también, Salida: alumno.nombre alumno.edad
+	fmientras
+	Cerrar(f)
+Fin
+
+{
+	Acceso directo:
+		PosicionActual(f)
+		TamañoArchivo(f)	// cuenta desde el 0. Si tengo 4 me va a dar 5...
+		IrPos(f, pos)
+		+		// IrPos(f, PosicionActual(f)-1) Vuelve el cabezal un registro antes
+				// Escribir(f, x)
+		Leer(f, x) donde x puede ser un registro.
+		Escribir(f, x)
+}
+
+Muestra lo que está almacenado en "alumnos.dat", que tiene almacenados registros de dos campos. 
+Muestra el registro alumno/el campo nombre y el campo edad.
+
+// pasado a carpeta
+b) Almacenar en un arreglo los registros del archivo alumnos.dat.
+Algoritmo Ejemplo8b
+Lexico
+	NMax = 120
+	TAlumno = <nombre ∈ Cadena, edad ∈ Z>
+	TArreglo = arreglo [1..NMax] de TAlumno		// en algunos lenguajes se puede declarar que el techo del arreglo sea una variable
+	TData = <a ∈ TArreglo, cant ∈ (0..NMax)>
+	f ∈ ARCHIVO de TAlumno
+	alumno ∈ TAlumno
+	curso ∈ TData
+
+	i e Z
+Inicio
+	Entrada: curso.cant		// curso.cant <- 0 |-> mientras (no EOF(f) y curso.cant <= NMax) |-> Leer(f,x) |-> curso.cant <- curso.cant + 1 |-> curso.a[curso.cant] <- x |-> 
+	Abrir("alumnos.dat",f,l)
+	Si ( EOF(f) o curso.cant = 0 ) entonces
+		Salida: "El archivo está vacío o el arreglo no tiene cantidad"
+	sino
+		Si ( TamañoArchivo(f) <= curso.cant) entonces		// preguntar si NMax <= TamañoArchivo(f)
+			i <- 1
+			Mientras ( no( EOF(f) ) y i <= TamañoArchivo(f) ) hacer
+				Leer(f, alumno)
+				curso.a[i] <-- alumno
+				i <- i + 1
+			Fmientras
+		sino
+			Salida: "Se almacenarán datos hasta que el arreglo se complete. El tamaño del archivo es superior a la cantidad del arreglo"
+			Para ( i <-- 1 , i <= curso.cant y no( EOF(f) ) , i <-- i +1 ) hacer
+				Leer(f, alumno)
+				curso.a[i] <-- alumno
+			Fpara
+		Fsi
+	Fsi
+	Cerrar(f)
+Fin
+
+// pasado a carpeta
+c) Almacenar en una LSE con ficticio todos los registros del archivo alumnos.dat.
+Algoritmo Ejemplo8c
+Lexico
+	TAlumno = <nombre ∈ Cadena, edad ∈ Z>
+	TNodo =<info ∈ TAlumno, next ∈ puntero a TNodo>
+	f ∈ ARCHIVO de TAlumno
+	alumno ∈ TAlumno
+	miListado ∈ puntero a TNodo // puntero la inicio de la LSE
+	aux1, aux2 ∈ puntero a TNodo //defina las variables que considere necesarias para manipular la LSE
+Inicio
+	Abrir("alumnos.dat",f,l)
+	Si ( EOF(f) ) entonces
+		Salida: "El archivo está vacío"
+	sino
+		Obtener(miListado)
+		(^miListado).next <- nil
+		aux2 <- miListado
+		Mientras ( no(EOF(f) ) hacer
+			Leer(f, alumno)			// Leer(f, alumno)
+			Obtener(aux)				// Obtener(aux)
+			(^aux).info <- alumno		// aux.info <- alumno
+			(^aux2).next <- aux		// aux.next <- aux2.next	// aux2 viene apuntando a miListado antes del ciclo
+			aux2 <- aux				// aux2.next <- aux
+			(^aux).next <- nil			// --
+		Fmientras
+	Fsi
+	Cerrar(f)
+Fin
+
+
+	Act 9
+// pasado a carpeta
+a) ¿Qué hace el siguiente algoritmo?
+Algoritmo Ejemplo
+Lexico
+	TPersona = <nombre ∈ Cadena, edad ∈ Z>
+	f ∈ ARCHIVO de TPersona
+	reg ∈ Tpersona
+	i ∈ Z
+Inicio
+	Abrir("personas.dat",f,a)
+	para (i←1, i<=20, i←i+1) hacer
+		Entrada:reg.nombre
+		Entrada:reg.edad
+		Escribir(f,reg)
+	fpara
+	Cerrar(f)
+Fin
+
+Escribe 20 registros (de dos campos; nombre y edad) en el archivo "personas.dat", al final si ya estaba creado o crea uno nuevo si no existe
+Escribe al principio apenas lo abre si no existe. Sino en donde caiga el cabezal.
+
+
+// pasado a carpeta
+b) ¿Qué sucede si traducimos en lenguaje C el Abrir por 
+File* archivo;		// nombre interno
+archivo= fopen("personas.dat",r)?
+
+Lo abrimos en modo lectura. Quiere decir que no podriamos escribirlo.
+
+// Hasta acá llegó la clase Miercoles 14-09
+
+// Hecho en lab después de clase:
+
+// pasado a carpeta
+	Act 10
+Ej. 10) Desarrolle un algoritmo que permita almacenar en un archivo los datos de vendedores de una
+empresa. Deberá incluir de cada vendedor: Nombre, Apellido, DNI, Edad, Total de ventas y sueldo
+básico.
+
+Algoritmo AlmacenarVendedoresEnArchivo
+Léxico
+	TEmpleado = < nombre e Cadena, apellido e Cadena, dni e Z, edad e (1..120), totalVentas e R, sueldoBasico e R >
+
+	Acción CargarArchivo (dato nom e Cadena, resultado fA e Archivo de TEmpleado)
+	Léxico local
+		pararCarga e (Si, No)
+		vA e TEmpleado
+	Inicio
+		Abrir(nom, fA, a)		// Abrir(nom, fA, e) solo si cada vez que ejecuto el programa está vacío. sino usar el a es más seguro de no pisar lo que ya tenía
+		Entrada: pararCarga
+		Si ( pararCarga = No ) entonces
+			Repetir
+				Entrada: vA	// vA.nombre, vA.apellido, vA.dni, vA.edad, vA.totalVentas, vA.sueldoBasico
+				Escribir(fA, vA)
+				Entrada: pararCarga
+			Hasta que ( pararCarga = Si )
+		Fsi
+		Cerrar(fA)
+	Facción
+
+	Acción MostrarArchivo(dato nom e Cadena, fA e Archivo de TEmpleado)
+	Léxico local
+		vA e TEmpleado
+	Inicio
+		Abrir(nom, fA, l)
+		Si ( EOF(f) ) entonces
+			Salida: "El archivo está vacío"
+		sino
+			Mientras ( no( EOF(f) ) ) hacer
+				Leer(f, vA)
+				Salida: vA	// vA.nombre, vA.apellido, vA.dni, vA.edad, vA.totalVentas, vA.sueldoBasico
+			Fmientras
+		Fsi
+		Cerrar(fA)
+	Facción
+
+	f e Archivo de TEmpleado
+	nombreArchivo e Cadena
+Inicio
+	Entrada: nombreArchivo
+	CargarArchivo(nombreArchivo, f)
+	MostrarArchivo(nombreArchivo, f)
+Fin
+
+
+Viernes 16/09:
+// pasado a carpeta
+	Act 11
+Ej. 11) 	Desarrolle un algoritmo que reciba por la entrada información sobre personas y las almacene en un arreglo de registros.
+		Un registro que representa a una persona consta de 2 campos: nombre y edad. 
+		Una vez finalizada la lectura, el algoritmo deberá almacenar los datos de las personas en un archivo.
+		El nombre del archivo debe ser dado por la entrada.
+
+Algoritmo AlmacenarArregloRegistroEnArchivo
+Léxico
+	NMax = 1000
+	TPers = < nombre e Cadena, edad e (0..120) >
+	TArreglo = arreglo [1..NMax] de TPers
+	TData = < a e TArreglo, cant e (0..NMax) >
+	
+	Acción CargarArregloDeRegistro (resultado aReg e TData)
+	Léxico local
+		i e Z
+	Inicio
+		Entrada: aReg.cant
+		Para (i <-- 1, i <= aReg.cant, i <-- i+1) hacer
+			Entrada: aReg.a[i].nombre	// aReg.a[i]
+			Entrada: aReg.a[i].edad
+		Fpara
+	Facción
+
+	Función AlmacenarPersEnArchivo(dato nom e Cadena, arr e TData) <-- Archivo de TArreglo
+	Léxico local
+		fA e Archivo de TArreglo
+		i e Z
+	Inicio
+		Abrir(nom, fA, a)	// Abrir(nom, fA, e) para almacenar siempre al princpio
+		Para (i <-- 1, i <= arr.cant, i <-- i + 1) hacer
+			Escribir(fA, arr.a[i])
+		Fpara
+		Cerrar(fA)
+		<-- fA
+	Ffunción
+
+	f e Archivo de TArreglo
+	arregloPersonas e TData
+	nombreArchivo e Cadena
+
+Inicio
+	Entrada: nombreArchivo	// un .rar o una carpeta tiene archivos que podemos crear (.txt, .dat, etc)
+	CargarArregloDeRegistro(arregloPersonas)
+	f <-- AlmacenarPersEnArchivo(nombreArchivo, arregloPersonas)
+	// MostrarArchivo
+Fin
+
+Lunes 19/09 	//Lunes 26/09 todos pasados a la carpeta
+
+// pasado a la carpeta
+	Act 12
+Ej. 12) Realiza un algoritmo que lea los datos del archivo creado en el ejercicio anterior, y almacene en un
+arreglo, definido adecuadamente, solo las personas mayores de edad. Finalmente, el contenido del arreglo
+debe almacenarse en un archivo llamado “mayores.dat”. Se considera mayor de edad a quién tiene 18
+años o más años.
+III ) PREGUNTA: ¿Cuáles son las primitivas en Notación Algorítmica para manipular archivos bajo
+la modalidad de acceso directo?
+
+Algoritmo AlmacenarMayoresEdad
+Léxico
+	NMax = 1000
+	TPers = < nombre e Cadena, edad e (0..120) >
+	TArreglo = arreglo [1..NMax] de TPers
+	TData = < a e TArreglo, cant e (0..NMax) >
+
+	Acción CargarArchivoEjercicioAnterior(resultado fA e Archivo de TArreglo)	// ya viene cargada supuestamente. o no...
+
+	Función MayoresEdadEnArreglo(dato nom e Cadena, fA e Archivo de TArreglo) <-- TData	// Recibe un archivo y devuelve un arreglo (TData)
+	Léxico local
+		display e TArreglo
+		aReg e TData
+	Inicio
+		Abrir(nom, fA, l)
+		Si ( EOF(fA) ) entonces	// ya vino vacío entonces saco el TData "vacío", cant=0...
+			aReg.cant <-- 0
+			<-- aReg
+		sino
+			Si ( TamañoArchivo(fA) <= NMax ) entonces		// todo bien; los puedo almacenar a todos
+				// Para ( aReg.cant <-- 1 , no( EOF(fA) ) , aReg.cant <-- aReg.cant + 1 ) hacer
+				aReg.cant <-- 0
+				Mientras ( no( EOF(fA) ) ) hacer	// y aReg.cant <= TamañoArchivo(fA), pero eso pasa siempre
+					aReg.cant <-- aReg.cant + 1
+					Leer(fA, display)
+					aReg.a[aReg.cant] <-- display
+				FMientras
+			sino
+				// Salida: "Se van a cargar" NMax "personas como máximo al arreglo"
+				// Para ( aReg.cant <-- 1 , aReg.cant <= NMax , aReg.cant <-- aReg.cant + 1 ) hacer
+				aReg.cant <-- 0
+				Mientras ( aReg.cant <= NMax ) hacer	// y no( EOF(fA) ), pero eso pasa siempre
+					aReg.cant <-- aReg.cant + 1
+					Leer(fA, display)
+					aReg.a[aReg.cant] <-- display
+				FMientras
+			Fsi
+		Fsi
+		Cerrar(fA)
+		<-- aReg
+	Ffunción
+
+	Acción AlmacenarMayoresEnArchivo(dato arr e TData, resultado fA e Archivo de TArreglo)
+	Léxico local
+		nomArc e Cadena
+		i e Z
+	Inicio
+		nomArc <-- "mayores.dat"
+		Abrir(nomArc, fA, e)
+		Si ( arr.cant > 0 ) entonces
+			Para ( i <-- 1 , i <= arr.cant , i <-- i + 1 ) hacer
+				Si ( arr.a[i].edad >= 18 ) entonces
+					Escribir(fA, arr.a[i])
+				Fsi
+			Fpara
+		Fsi
+		Cerrar(fA)
+	Facción
+
+	fAnterior, fNuevo e Archivo de TArreglo
+	arregloPersonas e TData
+Inicio
+	CargarArchivoEjercicioAnterior(fAnterior)
+	arregloPersonas <-- MayoresEdadEnArreglo(fAnterior)
+	AlmacenarMayoresEnArchivo(arregloPersonas, fNuevo)
+	// MostrarArchivo(fNuevo)
+Fin
+
+Las primitivas en Not Alg para manipular archivos bajo la modalidad de acceso directo son:
+	Abrir(nombre externo, nombre interno, apertura)
+	Leer(nombre interno, variable del tipo del archivo)
+	Escribir(nombre interno, variable del tipo del archivo)
+	Cerrar(nombre interno)
+	IrPos(nombre interno, posición)
+	TamañoArchivo(nombre interno)
+	PosicionActual(nombre interno)
+
+// pasado a la carpeta
+	Act 13
+Ej. 13) Desarrolle una acción que utilice como parámetro de entrada el nombre interno del archivo, el
+nombre de un estudiante a buscar y cómo parámetro de salida una variable entera que almacenará el valor
+que corresponda a la posición del registro	/* dice registro porque el archivo es de registros, entonces cada posicion es un registro */
+con ese nombre dentro del archivo y si no lo encontró almacenará el valor -1. El perfil de esta acción es:
+
+	TEstudiante= <nombre ∈ Cadena, calle ∈ Cadena, ciudad ∈ Cadena, codigoPostal ∈ Cadena, edad ∈ Z, sw ∈ Z >
+	TArch = archivo de TEstudiante
+	Acción Buscar (dato f ∈ TArch, nom ∈ Cadena, resultado pos ∈ Z)
+	Léxico local
+		nomExt e Cadena
+		est e TEstudiante
+	Inicio
+		nomExt <-- "alumnos.dat"
+		Abrir(nomExt, f, l)
+		pos <-- ( -1 )
+		Mientras ( no( EOF(f) ) ) hacer
+			Leer(f, est)
+			Si ( est.nombre = nom ) entonces
+				pos <-- PosicionActual(f) - 1
+			Fsi
+		Fmientras
+		Cerrar(f)
+	Facción
+
+// pasado a la carpeta
+	Act 14
+Ej. 14) Suponiendo que tenemos un archivo con 100 registros cómo máximo del tipo TEstudiante
+definido en el ejercicio anterior. Desarrolla un algoritmo que almacene en un arreglo unidimensional los
+nombres de los estudiantes, su edad y la nota que le corresponda. Los datos de cada alumno se obtienen
+del archivo y las notas son ingresadas por la entrada. Una vez cargado el arreglo se debe informar su
+contenido y antes de terminar el algoritmo se deben pasar los datos del arreglo a un archivo llamado
+”notas.dat”.
+
+Algoritmo ArchivoArregloArchivo
+Léxico
+	NMax = 100
+	TEstudiante= <nombre ∈ Cadena, calle ∈ Cadena, ciudad ∈ Cadena, codigoPostal ∈ Cadena, edad ∈ Z, sw ∈ Z >
+	TNomEdadNota = < nombre e Cadena, edad e Z, nota e R >
+	TArreglo = arreglo [1..NMax] de TNomEdadNota
+	TData = < a e TArreglo, cant e (0..NMax) >
+
+	Acción CargarArchivoAnterior(resultado fA e Archivo de TEstudiante)	// se  llama "alumnos.dat"
+
+	Acción CargarDatosAlumnos(dato fA e Archivo de TEstudiante, resultado arr e TData)
+	Léxico local
+		est e Archivo de TEstudiante
+	Inicio
+		Abrir("alumnos.dat", fA, l)	// así se llama de la acción anterior/ejercicio anterior
+		Si ( EOF(fA) ) entonces
+			arr.cant <-- 0
+			Salida: "El archivo está vacío"
+		sino
+			arr.cant <-- 0
+			Si ( TamañoArchivo(fA) <= NMax) entonces
+				Mientras( no( EOF(fA) ) ) hacer
+					arr.cant <-- arr.cant + 1
+					Leer(fA, est)
+					arr.a[arr.cant].nombre <-- est.nombre
+					arr.a[arr.cant].edad <-- est.edad
+					Entrada: arr.a[arr.cant].nota
+				Fmientras
+			sino
+				Salida: "Se cargará hasta" NMax "alumnos en el arreglo"
+				Mientras( arr.cant <= NMax ) hacer
+					arr.cant <-- arr.cant + 1
+					Leer(fA, est)
+					arr.a[arr.cant].nombre <-- est.nombre
+					arr.a[arr.cant].edad <-- est.edad
+					Entrada: arr.a[arr.cant].nota
+				Fmientras
+			Fsi
+		Fsi
+		Cerrar(fA)
+	Facción
+
+	Acción MostrarArreglo(dato arr e TData)
+	Léxico local
+		i e Z
+	Inicio
+		Para ( i <-- 1 , i <= arr.cant , i <-- i + 1 ) hacer
+			Salida: arr.a[i].nombre
+			Salida: arr.a[i].edad
+			Salida: arr.a[i].notas
+		Fpara
+	Facción
+
+	Acción CargarArchivoNuevo(dato arr e TData, resultado fA e Archivo de TNomEdadNota)
+	Léxico local
+		nomArch e Cadena
+		nEdN e TNomEdadNota
+		i e Z
+	Inicio
+		nomArch <-- ”notas.dat”
+		Abrir(nomArch, fA, a)
+		Para ( i <-- 1 , i <= arr.cant , i <-- i + 1 ) hacer
+			nEdN.nombre <-- arr.a[i].nombre
+			nEdN.edad <-- arr.a[i].edad
+			nEdN.notas <-- arr.a[i].notas
+			Escribir(fA, nEdN)
+		Fpara
+		Cerrar(fA)
+	Facción
+	
+	estNuevo e TData
+	fAnterior e Archivo de TEstudiante
+	fNuevo e Archivo de TArreglo
+	
+Inicio
+	CargarArchivoAnterior(fAnterior)
+	CargarDatosAlumnos(fAnterior, estNuevo)
+	MostrarArreglo(estNuevo)
+	CargarArchivoNuevo(estNuevo, fNuevo)
+Fin
+
+// pasado a la carpeta
+	Act 15
+Ej. 15) Dado un archivo (llamado "personal.dat") que almacena la información de los empleados de una fábrica mediante registro de tipo:
+TPers = < ape ∈ Cadena, nom ∈ Cadena, antiguedad ∈ Z+, basico ∈ R >
+Dónde ape es el apellido, nom el nombre, antiguedad es la cantidad de años de antigüedad en el trabajo y basico el sueldo básico.
+
+Desarrolle un algoritmo que conste de las siguientes opciones:
+a) Alta: permita cargar los datos de un empleado (excepto el sueldo que debe ser calculado en un paso posterior),
+
+b) Baja: que permita borrar un registro del archivo (baja lógica).
+
+c) Modificar: que permita buscar un registro por el apellido y luego permita modificar cualquiera de los otros campos del registro 
+(excepto el apellido).
+
+d) Listar: liste todos los datos del personal,
+
+e) Calcular: calcula el sueldo que corresponde a cada empleado almacenado en el archivo, calculado con el básico más $ 30 por cada año 
+de antigüedad, el monto de $30 surge de un convenio entre el gremio de los empleados y la patronal, por lo tanto debe ser un dato que 
+debería poder ser dado por la entrada del algoritmo.
+
+f) No olvide agregar una opción para Salir.
+
+Nota: el algoritmo deberá contener una acción que antes de mostrar el menú de opciones, leerá el archivo
+de datos y en caso que no exista lo creará.
+VI ) PREGUNTA: ¿Qué diferencia existe entre los archivos de texto y los archivos binarios?
+
+Algoritmo MenuOpcionesArchivo
+Léxico
+	TPers = < ape ∈ Cadena, nom ∈ Cadena, antiguedad ∈ Z+, basico ∈ R, borrado e Lógico >
+
+	Acción LeerArchivo(dato nomArc e Cadena, dato/resultado fA e Archivo de TPers)
+	Léxico local
+		pers e TPers
+	Inicio
+		Abrir(nomArc, fA, e)
+		Si ( EOF(fA) ) entonces
+			Cerrar(fA)
+		sino
+			Mientras( no( EOF(fA) ) ) hacer
+				Leer(fA, pers)	// abrirlo como escritura permite leer
+				Si ( no( pers.borrado) ) entonces
+					Salida: pers.ape
+					Salida: pers.nom
+					Salida: pers.antiguedad
+					Si ( pers.basico <> -1 ) entonces
+						Salida: pers.basico
+					Fsi
+				Fsi
+			Fmientras
+			Cerrar(fA)
+		Fsi
+		// Cerrar(fA) cambiando la condicion del si...
+	Facción
+
+	Acción Alta(dato nomArc e Cadena, dato/resultado fA e Archivo de TPers)	// opcion nro 1
+	Léxico local
+		pers e TPers
+		msg e Cadena
+	Inicio
+		Abrir(nomArc, fA, a)	// el cabezal ya se posiciona al ultimo por apertura a
+		msg <-- "Ingresar apellido: "
+		Salida: msg
+		Entrada: pers.ape
+		msg <-- "Ingresar nombre: "
+		Salida: msg
+		Entrada: pers.nom
+		msg <-- "Ingresar antigüedad: "
+		Salida: msg
+		Entrada: pers.antiguedad
+		pers.basico <-- ( -1 )	// Inicializo el basico en -1 para evitar Alta() y Listar() sin Calcular
+		pers.borrado <-- Falso
+		Escribir(fA, pers)
+		Cerrar(fA)
+	Facción
+	
+	Acción Baja(dato nomArc e Cadena, dato/resultado fA e Archivo de TPers)	// opcion nro 2
+	Léxico local
+		pers e TPers
+		msg e Cadena
+		posReg e N
+	Inicio
+		msg <-- "Ingrese la posición del registro que quiere dar de baja"
+		Salida: msg
+		Entrada: posReg
+		Abrir(nomArc, fA, e)
+		Si ( posReg <= TamañoArchivo(fA) ) entonces
+			IrPos(fA, posReg)
+			Leer(fA, pers)
+			Si ( no( pers.borrado ) ) entonces
+				IrPos(fA, posReg)
+				pers.borrado <-- Verdadero
+			sino
+				Salida: "El registro ya está borrado"
+			Fsi
+		sino
+			msg <-- "Posición inexistente"
+			Salida: msg
+		Fsi
+	Facción
+
+	Acción Modificar(dato nomArc e Cadena, dato/resultado fA e Archivo de TPers)	// opcion nro 3
+	Léxico local
+		TEnum = ( Nombre, Antiguedad, Basico, Borrado )	// cualquiera de los otros campos del registro...
+		modify e TEnum
+		msg, apellido e Cadena
+		rta e ( Si, No)
+		emp e TPers
+		aux e Z
+	Inicio
+		msg <-- "¿Desea modificar?"
+		Salida: msg
+		Entrada: rta
+		Si ( rta = Si ) entonces
+			msg <-- "Ingrese el apellido del empleado que quiere modificar"
+			Salida: msg
+			Entrada: apellido
+			Abrir(nomArc, fA, e)
+			aux <-- 1
+			Mientras ( no( EOF(fA) ) ) hacer
+				aux <-- aux + 1
+				Leer(fA, emp)
+				Si ( emp.ape = apellido ) entonces	// busca que lo leido en el campo ape coincida con el apellido que se quiere buscar
+					aux <-- 1
+					IrPos( fA, PosicionActual(fA) - 1 )	// cuando lo encuentra, me vuelvo 1 posicion asi escribe sobre el registro deseado
+					Repetir
+						msg <-- "¿Qué quiere modificar?" 
+						Salida: msg
+						Entrada: modify
+						Según
+							( modify = Nombre ) : Entrada: emp.nom
+													Escribir(fA, emp)
+													IrPos( fA, PosicionActual(fA) - 1 )	// después de escribir sobre el registro deseado, vuelvo 1 posición para seguir iterando normal
+							( modify = Antiguedad ) : Entrada: emp.antiguedad
+														Escribir(fA, emp)
+														IrPos( fA, PosicionActual(fA) - 1 )	// después de escribir sobre el registro deseado, vuelvo 1 posición para seguir iterando normal
+							/* Sacar condiciones si no hay que modificar esos campos
+							( modify = Basico ) : 	Entrada: emp.basico
+													Escribir(fA, emp)
+													IrPos( fA, PosicionActual(fA) - 1 )	// después de escribir sobre el registro deseado, vuelvo 1 posición para seguir iterando normal
+							Otros : Entrada: emp.borrado
+									Escribir(fA, emp)
+									IrPos( fA, PosicionActual(fA) - 1 )	// después de escribir sobre el registro deseado, vuelvo 1 posición para seguir iterando normal
+							*/
+						Fsegún
+						msg <-- "¿Desea seguir modificando?"
+						Salida: msg
+						Entrada: rta
+					Hasta que ( rta = No )
+				Fsi
+			Fmientras
+			Si ( aux > TamañoArchivo(fA) ) entonces
+				// Si no encontró apellidos, aux no volvió a valer 1 por lo tanto llegó al final del archivo sin encontrar nada
+				msg <-- "Apellido inexistente"
+				Salida: msg
+			Fsi
+			Cerrar(fA)
+		sino
+			msg <-- "No se quiso modificar nada"
+			Salida: msg
+		Fsi
+	Facción
+
+	Acción Listar(dato nomArc e Cadena, dato fA e Archivo de TPers)	// Muestra un empleado siempre y cuando no se haya borrado (lógico)
+	Léxico local
+		emp e TPers
+		msg e Cadena
+	Inicio
+		Abrir(nomArc, fA, l)
+		Si ( no( EOF(fA) ) ) entonces
+			Mientras( no( EOF(fA) ) ) hacer
+				Leer(fA, emp)
+				Si ( no( emp.borrado ) ) entonces
+					Salida: emp.ape
+					Salida: emp.nom
+					Salida: emp.antiguedad
+					Si ( emp.basico <> -1 ) entonces	// Resguardo contra: Alta() y Listar() sin Calcular()
+						Salida: emp.basico
+					sino
+						msg <-- "El empleado " + emp.nom + emp.ape + "aún no tiene asignado un sueldo".
+						Salida: msg
+					Fsi
+				Fsi
+			Fmientras
+		sino
+			msg <-- "El archivo está vacío"
+			Salida: msg
+		Fsi
+		Cerrar(fA)
+	Facción
+
+	// Calcula el sueldo (básico y normal) de cada empleado de la sig manera: sueldoBasico+(30*antigüedad)
+	// donde sueldoBasico es un dato que debería poder ser dado por la entrada y antiguedad los años de antiguedad de un empleado.
+	Acción Calcular(dato nomArc e Cadena, dato/resultado fA e Archivo de TPers)	// opcion nro 5
+	Léxico local
+		MontoConvenio = 30	// Según el convenio con el gremio y la patronal se acordó de $30 
+		sueBas e R
+		emp e TPers
+	Inicio
+		Abrir(nomArc, fA, e)
+		Entrada: sueBas	// Se hace la entrada de sueldo básico. Todos van a tener el mismo sueldo básico
+		Mientras ( no( EOF(fA) ) ) hacer
+			Leer(fA, emp)
+			emp.basico <-- sueBas + ( MontoConvenio * emp.antiguedad )
+			IrPos( fA, PosicionActual(fA) - 1 )	// Muevo al registro que deseo modificar
+			Escribir(fA, emp)
+		Fmientras
+		Cerrar(fA)
+	Facción
+
+	Acción Salir(dato nomArc e Cadena, dato/resultado opc e Z)	// opcion nro 6
+	Léxico local
+		msg e Cadena
+		rta e (Si, No)
+	Inicio
+		msg <-- "¿Terminar el programa?"
+		Salida: msg
+		Entrada: rta
+		Si ( rta = Si ) entonces
+			msg <-- "Salida exitosa. El archivo que contiene los datos del programa se llama " + nomArc
+			Salida: msg
+		sino
+			opc <-- 0
+			msg <-- "Vuelve al menú de opciones"
+			Salida: msg
+		Fsi
+	Facción
+
+	msg, nombreArchivo e Cadena
+	f e Archivo de TPers
+	opcionEntry e ( 0..6 )
+
+Inicio
+	nombreArchivo <-- "personal.dat"
+	LeerArchivo(nombreArchivo, f)
+	Repetir
+		msg <-- "· Menú principal
+					Seleccione una opción para continuar:
+					1. Dar de alta un empleado
+					2. Dar de baja un registro (por posición)
+					3. Modificar datos del empleado (por apellido)
+					4. Mostrar los datos de los empleados
+					5. Calcular el sueldo de los empleados
+					6. Salir"
+		Salida: msg
+		Repetir
+			Entrada: opcionEntry
+		Hasta que ( opcionEntry <> 0 )
+		Según
+			( opcionEntry = 1 ) :	msg <-- "Opción 1: Dar de alta"
+									Salida: msg
+									Alta(nombreArchivo, f)
+
+			( opcionEntry = 2 ) : 	msg <-- "Opción 2: Dar de baja"
+									Salida: msg
+									Baja(nombreArchivo, f)
+
+			( opcionEntry = 3 ) : 	msg <-- "Opción 3: Modificar"
+									Salida: msg
+									Modificar(nombreArchivo, f)
+
+			( opcionEntry = 4 ) : 	msg <-- "Opción 4: Listar"
+									Salida: msg
+									Listar(nombreArchivo, f)
+
+			( opcionEntry = 5 ) : 	msg <-- "Opción 5: Calcular"
+									Salida: msg
+									Calcular(nombreArchivo, f)
+
+			Otros : 	msg <-- "Opción 6: Salir"
+						Salida: msg
+						Salir(nombreArchivo, opcionEntry)
+		Fsegún
+	Hasta que ( opcionEntry = 6 )
+Fin
+
+La diferencia entre archivos de texto y archivos binarios es que en los archivos de texto sólo se pude almacenar texto plano (osea caracteres
+soportados por el sistema ASCII) en cambio en los archivos binarios se pueden almacenar textos planos o registros o tipos estructurados; 
+se almacenan en secuencias de bites que los representan.
