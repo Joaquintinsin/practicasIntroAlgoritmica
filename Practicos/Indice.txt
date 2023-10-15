@@ -1,0 +1,28 @@
+TP 1:
+  Resolucion de problemas: analisis
+TP 2:
+  Composición secuencial
+TP 3:
+  Análisis y Diseño (Composición Secuencial y Condicional). Implementación. Tipos
+TP 4:
+  Diseño: Composición Iterativa. Implementación. Prueba
+TP 5:
+  Modularización. Funciones
+TP 6:
+  Acciones
+TP 7:
+  Tipo de Dato Estructurado Homogéneo: Arreglo
+TP 8:
+  Arreglo de registros
+TP 9:
+  Estructuras de datos dinámicas. Listas simplemente encadenadas (LSE). Listas doblemente encadenadas (LDE).
+TP 10:
+  Archivos.
+TP 11:
+  Recursividad
+TP 12:
+  Algoritmos de Ordenamiento y Búsqueda
+TP 13:
+  Secuencias de marca final
+TP 14:
+  Tratamiento de secuencias con marca inicial. Uso de Esquemas.
