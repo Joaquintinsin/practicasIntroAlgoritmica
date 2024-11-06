@@ -1,9 +1,71 @@
-1proyectoFinal2022.pdf
-2proyectoFinal2022.pdf
-Consultas/
-trabajosTato/
-Teoricos/
-Laboratorio/Seteo.de.Linux.y.GCC/
-Actividades/aaTPFinal/listortis/Entregado/
+# Archivos de compilación
+*.o
+*.obj
+*.exe
+*.out
+*.app
+*.i
+*.ii
+*.s
+*.su
 
-# No ignoré todos los pdf por si los necesito en otra compu heheee!
+# Archivos de librería y enlace
+*.a
+*.so
+*.dll
+*.lib
+*.dylib
+
+# Archivos de depuración
+*.dSYM/
+*.stackdump
+*.core
+
+# Archivos de registro y configuración temporal
+*.log
+*.tmp
+
+# Archivos de compilación intermedia
+*.lo
+*.la
+*.Plo
+*.P
+
+# Directorios de compilación
+/build/
+bin/
+out/
+Debug/
+Release/
+
+# Archivos de herramientas de compilación
+Makefile
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+compile_commands.json
+CTestTestfile.cmake
+
+# Archivos de IDEs
+.vscode/
+.idea/
+*.code-workspace
+
+# Archivos generados por editores de texto
+*~
+*.swp
+*.bak
+*.orig
+*.rej
+
+# Archivos de backup
+*.old
+*.backup
+*.gch
+
+# Archivos de empaquetado
+*.tar.gz
+*.zip
+*.7z
+*.tar
+*.rar
