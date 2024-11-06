@@ -39,17 +39,13 @@ int Multiplo(int a, int x){
 }
 
 long Potencia(int a, int x){ 
-	long res;   // resultado
-	
-	if ( x <= 0 ){
-		res = 1;
-	}else{
-		res = 1;
-        while ( x > 0 ){
-            res = a * res;
-            x--;
-        }
+	if ( x <= 0 ) {
+		return 1;
 	}
-	
-	return res;
+	long res = 1;
+    while ( x > 0 ) {
+        res *= a;
+        x--;
+    }
+    return res;
 }
